@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquapond.sk — Ads Audit | Dexfinity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dex-blue: #0065F7;
+      --dex-navy: #05024E;
+      --dex-white: #ffffff;
+      --dex-light-bg: #F4F6FC;
+      --dex-blue-light: #E8F0FE;
+      --dex-blue-10: rgba(0, 101, 247, 0.1);
+      --dex-blue-20: rgba(0, 101, 247, 0.2);
+      --dex-navy-light: #0A0A6E;
+      --dex-text: #1A1A2E;
+      --dex-muted: #6B7280;
+      --dex-border: #E5E7EB;
+      --font-primary: 'Questrial', Arial, sans-serif;
+      --font-secondary: 'Poppins', Arial, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 2px 8px rgba(0, 101, 247, 0.08);
+    }
+
+    body {
+      font-family: var(--font-secondary);
+      color: var(--dex-text);
+      background: var(--dex-white);
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: var(--font-primary); }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--dex-border);
+      padding: 10px 0;
+    }
+    .nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo { height: 32px; }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--dex-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-secondary);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--dex-blue); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--dex-navy);
+      color: var(--dex-white);
+      padding: 80px 40px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    /* Decorative circles */
+    .hero .circle-1 {
+      position: absolute;
+      width: 500px; height: 500px;
+      border: 2px solid var(--dex-blue);
+      border-radius: 50%;
+      opacity: 0.12;
+      top: -200px; right: -100px;
+    }
+    .hero .circle-2 {
+      position: absolute;
+      width: 300px; height: 300px;
+      border: 2px solid var(--dex-blue);
+      border-radius: 50%;
+      opacity: 0.08;
+      bottom: -100px; left: -80px;
+    }
+    .hero .circle-3 {
+      position: absolute;
+      width: 180px; height: 180px;
+      background: var(--dex-blue);
+      border-radius: 50%;
+      opacity: 0.06;
+      top: 60px; right: 200px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--dex-blue-20);
+      border: 1px solid rgba(0,101,247,0.3);
+      border-radius: 50px;
+      padding: 6px 18px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: var(--font-secondary);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      color: var(--dex-white);
+    }
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      line-height: 1.15;
+      position: relative;
+    }
+    .hero h1 span { color: var(--dex-blue); }
+    .hero .tagline {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dex-blue);
+      margin-bottom: 16px;
+    }
+    .hero p.sub {
+      font-size: 16px;
+      font-weight: 300;
+      opacity: 0.8;
+      max-width: 560px;
+      margin-bottom: 40px;
+      font-family: var(--font-secondary);
+    }
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num {
+      font-size: 36px;
+      font-weight: 700;
+      font-family: var(--font-secondary);
+      display: block;
+      color: var(--dex-white);
+    }
+    .hero-stat .label {
+      font-size: 11px;
+      font-family: var(--font-secondary);
+      font-weight: 500;
+      opacity: 0.6;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ─── URGENCY ─── */
+    .urgency {
+      background: var(--dex-blue);
+      color: var(--dex-white);
+      text-align: center;
+      padding: 12px 24px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font-secondary);
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 56px 0;
+    }
+    section.alt {
+      background: var(--dex-light-bg);
+    }
+    section h2 {
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--dex-navy);
+      margin-bottom: 6px;
+    }
+    section .section-sub {
+      color: var(--dex-muted);
+      font-size: 14px;
+      font-family: var(--font-secondary);
+      margin-bottom: 32px;
+    }
+
+    /* ─── METRIC CARDS ─── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .metric-card {
+      background: var(--dex-white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--dex-blue);
+    }
+    .metric-card h3 {
+      font-size: 12px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--dex-muted);
+      margin-bottom: 8px;
+    }
+    .metric-card .value {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: var(--font-secondary);
+      color: var(--dex-navy);
+    }
+    .metric-card .desc {
+      font-size: 13px;
+      font-family: var(--font-secondary);
+      color: var(--dex-muted);
+      margin-top: 4px;
+    }
+    .metric-card.pain {
+      border-left-color: var(--dex-navy);
+      background: var(--dex-navy);
+      color: var(--dex-white);
+    }
+    .metric-card.pain h3 { color: rgba(255,255,255,0.6); }
+    .metric-card.pain .value {
+      font-size: 15px;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--dex-white);
+      line-height: 1.5;
+    }
+
+    /* ─── CATEGORY HEADERS ─── */
+    .cat-header {
+      font-size: 13px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      color: var(--dex-navy);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin: 36px 0 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--dex-blue);
+      display: inline-block;
+    }
+
+    /* ─── AD CARDS ─── */
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .ad-card {
+      background: var(--dex-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--dex-border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .ad-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 24px rgba(0,101,247,0.12);
+    }
+    .ad-card .ad-header {
+      padding: 12px 18px;
+      background: var(--dex-navy);
+      color: var(--dex-white);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ad-card .ad-header .type {
+      font-size: 11px;
+      font-family: var(--font-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.8;
+    }
+    .ad-card .ad-header .platform {
+      background: var(--dex-blue-20);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-family: var(--font-secondary);
+    }
+    .ad-card .ad-body {
+      padding: 18px;
+    }
+    .ad-card .ad-body h4 {
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-secondary);
+      margin-bottom: 8px;
+      color: var(--dex-navy);
+    }
+    .ad-card .ad-body p {
+      font-size: 13px;
+      font-family: var(--font-secondary);
+      color: var(--dex-muted);
+      margin-bottom: 12px;
+    }
+    .ad-card .ad-body .issues {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    /* ─── BADGES (brand-compliant) ─── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-secondary);
+      letter-spacing: 0.3px;
+    }
+    .badge-critical {
+      background: var(--dex-navy);
+      color: var(--dex-white);
+    }
+    .badge-warning {
+      background: var(--dex-blue-10);
+      color: var(--dex-blue);
+    }
+    .badge-info {
+      background: var(--dex-blue-light);
+      color: var(--dex-blue);
+    }
+    .badge-ok {
+      background: var(--dex-light-bg);
+      color: var(--dex-navy);
+    }
+
+    .issue-tag {
+      font-size: 11px;
+      font-family: var(--font-secondary);
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--dex-blue-10);
+      color: var(--dex-blue);
+      font-weight: 500;
+    }
+    .issue-tag.severe {
+      background: var(--dex-navy);
+      color: var(--dex-white);
+    }
+
+    /* ─── AD LINK BUTTON ─── */
+    .ad-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--dex-blue);
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font-secondary);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 1px solid var(--dex-blue);
+      border-radius: var(--radius-sm);
+      transition: all 0.2s;
+    }
+    .ad-link:hover {
+      background: var(--dex-blue);
+      color: var(--dex-white);
+    }
+    .ad-link.sm {
+      font-size: 12px;
+      padding: 4px 10px;
+    }
+
+    /* ─── FINDINGS ─── */
+    .finding {
+      display: grid;
+      grid-template-columns: 4px 1fr;
+      margin-bottom: 14px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--dex-white);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--dex-border);
+    }
+    .finding .bar { min-height: 100%; }
+    .finding .bar.high { background: var(--dex-navy); }
+    .finding .bar.med { background: var(--dex-blue); }
+    .finding .bar.low { background: rgba(0,101,247,0.3); }
+    .finding .content {
+      padding: 20px 24px;
+    }
+    .finding .content h4 {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: var(--font-secondary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dex-navy);
+    }
+    .finding .content p {
+      font-size: 13px;
+      font-family: var(--font-secondary);
+      color: var(--dex-muted);
+      line-height: 1.6;
+    }
+    .finding .content .rec {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: var(--dex-blue-10);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: var(--font-secondary);
+      color: var(--dex-navy);
+      border-left: 3px solid var(--dex-blue);
+    }
+    .finding .content .rec strong { color: var(--dex-blue); }
+
+    /* ─── SUMMARY ─── */
+    .summary-box {
+      background: var(--dex-navy);
+      color: var(--dex-white);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .summary-box .circle-dec {
+      position: absolute;
+      border: 2px solid var(--dex-blue);
+      border-radius: 50%;
+      opacity: 0.1;
+    }
+    .summary-box .circle-dec.c1 { width: 300px; height: 300px; top: -120px; right: -60px; }
+    .summary-box .circle-dec.c2 { width: 200px; height: 200px; bottom: -80px; left: -40px; }
+    .summary-box h2 { color: var(--dex-white); margin-bottom: 24px; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      position: relative;
+    }
+    .summary-item {
+      text-align: center;
+      padding: 24px 16px;
+      background: rgba(255,255,255,0.06);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .summary-item .val {
+      font-size: 32px;
+      font-weight: 700;
+      font-family: var(--font-secondary);
+      color: var(--dex-blue);
+    }
+    .summary-item .label-title {
+      font-size: 14px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .summary-item .desc {
+      font-size: 12px;
+      font-family: var(--font-secondary);
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    /* ─── TIMELINE ─── */
+    .rec-timeline {
+      position: relative;
+      padding-left: 36px;
+    }
+    .rec-timeline::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--dex-blue), var(--dex-navy));
+    }
+    .rec-step {
+      position: relative;
+      margin-bottom: 36px;
+    }
+    .rec-step::before {
+      content: '';
+      position: absolute;
+      left: -36px;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--dex-blue);
+      border: 3px solid var(--dex-white);
+      box-shadow: 0 0 0 2px var(--dex-blue);
+    }
+    .rec-step .step-label {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--dex-blue);
+      margin-bottom: 6px;
+    }
+    .rec-step h3 {
+      font-size: 18px;
+      color: var(--dex-navy);
+      margin-bottom: 8px;
+    }
+    .rec-step p {
+      font-size: 14px;
+      font-family: var(--font-secondary);
+      color: var(--dex-muted);
+    }
+    .rec-step ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    .rec-step ul li {
+      font-size: 14px;
+      font-family: var(--font-secondary);
+      color: var(--dex-text);
+      margin-bottom: 6px;
+    }
+
+    /* ─── TABLE ─── */
+    .audit-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--dex-border);
+      margin-top: 16px;
+    }
+    .audit-table th {
+      background: var(--dex-navy);
+      color: var(--dex-white);
+      padding: 14px 18px;
+      font-size: 11px;
+      font-family: var(--font-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    .audit-table td {
+      padding: 14px 18px;
+      font-size: 14px;
+      font-family: var(--font-secondary);
+      border-bottom: 1px solid var(--dex-border);
+      background: var(--dex-white);
+    }
+    .audit-table tr:last-child td { border-bottom: none; }
+    .audit-table tr:hover td { background: var(--dex-light-bg); }
+
+    /* ─── CTA BOXES ─── */
+    .cta-box {
+      margin-top: 24px;
+      padding: 20px;
+      background: var(--dex-navy);
+      border-radius: var(--radius-md);
+      text-align: center;
+    }
+    .cta-box a {
+      color: var(--dex-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      font-family: var(--font-secondary);
+    }
+    .cta-box a:hover { color: var(--dex-blue); }
+
+    /* ─── LINKS BOX ─── */
+    .links-box {
+      margin-top: 12px;
+      padding: 14px 18px;
+      background: var(--dex-white);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--dex-border);
+    }
+    .links-box p {
+      font-size: 13px;
+      font-family: var(--font-secondary);
+      color: var(--dex-muted);
+      margin-bottom: 8px;
+    }
+    .links-box .links-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      background: var(--dex-navy);
+      color: var(--dex-white);
+      padding: 48px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer .circle-f {
+      position: absolute;
+      border: 1px solid var(--dex-blue);
+      border-radius: 50%;
+      opacity: 0.08;
+    }
+    .footer .circle-f.f1 { width: 200px; height: 200px; top: -60px; left: -40px; }
+    .footer .circle-f.f2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
+    .footer-logo { height: 28px; margin-bottom: 16px; }
+    .footer p {
+      font-family: var(--font-secondary);
+      opacity: 0.5;
+      font-size: 13px;
+    }
+    .footer .go-beyond {
+      font-family: var(--font-secondary);
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dex-blue);
+      margin-top: 12px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 30px; }
+      .hero { padding: 48px 24px 64px; }
+      .hero-stats { gap: 24px; }
+      .ads-grid { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .summary-box { padding: 32px 24px; }
+      .nav-links { display: none; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- URGENCY -->
+<div class="urgency">
+  Sez&oacute;na baz&eacute;nov = apr&iacute;l&ndash;j&uacute;n &mdash; Ka&zcaron;d&yacute; de&ncaron; oneskorenia = straten&eacute; objedn&aacute;vky
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity" class="nav-logo">
+    <ul class="nav-links">
+      <li><a href="#meta">Meta Ads</a></li>
+      <li><a href="#google">Google Ads</a></li>
+      <li><a href="#findings">Zistenia</a></li>
+      <li><a href="#recs">Odpor&uacute;&#269;ania</a></li>
+      <li><a href="#heureka">Heureka</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="circle-1"></div>
+  <div class="circle-2"></div>
+  <div class="circle-3"></div>
+  <div class="container" style="position: relative;">
+    <div class="hero-badge">External Ads Audit</div>
+    <div class="tagline">Go Beyond</div>
+    <h1>Aquapond.sk<br><span>Anal&yacute;za reklam</span></h1>
+    <p class="sub">Kompletn&yacute; preh&#318;ad Meta Ads a Google Ads kampan&iacute; &mdash; zistenia, probl&eacute;my a odpor&uacute;&#269;ania pre okam&#382;it&eacute; zlep&scaron;enie.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="num">~20</span>
+        <span class="label">Meta Ads</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">~207</span>
+        <span class="label">Google Ads</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">2</span>
+        <span class="label">Google &uacute;&#269;ty</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">5 000 &euro;</span>
+        <span class="label">Mesa&#269;n&yacute; budget</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- CLIENT OVERVIEW -->
+  <section>
+    <h2>O klientovi</h2>
+    <p class="section-sub">Aquapond.sk &mdash; predaj baz&eacute;nov a pr&iacute;slu&scaron;enstva, 23 rokov na trhu</p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Obrat</h3>
+        <div class="value">4 mil. &euro;</div>
+        <div class="desc">z toho eshop 2 mil. &euro;</div>
+      </div>
+      <div class="metric-card">
+        <h3>Rast</h3>
+        <div class="value">~15%</div>
+        <div class="desc">ro&#269;n&yacute; rast obratu</div>
+      </div>
+      <div class="metric-card">
+        <h3>Budget</h3>
+        <div class="value">5 000 &euro;</div>
+        <div class="desc">mesa&#269;n&yacute; marketing spend</div>
+      </div>
+      <div class="metric-card pain">
+        <h3>Hlavn&yacute; pain</h3>
+        <div class="value">&bdquo;Ja predsa nem&aacute;m by&#357; ten, kto m&aacute; radi&#357; reklamnej agent&uacute;re &#269;o m&aacute; robi&#357;.&ldquo;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ META ADS ═══════ -->
+  <section id="meta" class="alt">
+    <div class="container">
+    <h2>Meta Ads Anal&yacute;za</h2>
+    <p class="section-sub">~20 akt&iacute;vnych reklam na Facebook &amp; Instagram &mdash; 4 kateg&oacute;rie</p>
+
+    <!-- HIRING -->
+    <div class="cat-header">1. Hiring Ads &mdash; be&#382;ia od marca 2025</div>
+    <div class="ads-grid">
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Hiring / HR</span>
+          <span class="platform">FB + IG + Messenger</span>
+        </div>
+        <div class="ad-body">
+          <h4>Mont&aacute;&#382;ny pracovn&iacute;k</h4>
+          <p>Poz&iacute;cia je st&aacute;le akt&iacute;vna na webe (aquapond.sk/zamestnanie) &mdash; ale reklama be&#382;&iacute; od marca 2025 s rovnak&yacute;m vizu&aacute;lom. Po roku hroz&iacute; bannerov&aacute; slepota.</p>
+          <div class="issues">
+            <span class="issue-tag severe">Be&#382;&iacute; 12+ mesiacov</span>
+            <span class="issue-tag">Treba refresh kreat&iacute;vu</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=955195373448592" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Hiring / HR</span>
+          <span class="platform">FB + IG + Messenger</span>
+        </div>
+        <div class="ad-body">
+          <h4>Predajca cez eshop</h4>
+          <p>Poz&iacute;cia je st&aacute;le otvoren&aacute; na webe &mdash; reklama ale be&#382;&iacute; od marca 2025 s rovnak&yacute;m kreat&iacute;vom. Po roku potrebuje refresh vizu&aacute;lu a copy.</p>
+          <div class="issues">
+            <span class="issue-tag severe">Be&#382;&iacute; 12+ mesiacov</span>
+            <span class="issue-tag">Rovnak&yacute; kreat&iacute;v 12 mes.</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=1004622688233863" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT ADS -->
+    <div class="cat-header">2. Product Ads &mdash; Baz&eacute;ny Compass Pools (~10 ks)</div>
+    <div class="ads-grid">
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Video Ad</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>FUN 100 Nova Blue</h4>
+          <p>Video reklama na konkr&eacute;tny model baz&eacute;na. CTA: &bdquo;Zavola&#357;&ldquo; &mdash; ch&yacute;ba &bdquo;Nak&uacute;pi&#357;&ldquo; alebo lead form.</p>
+          <div class="issues">
+            <span class="issue-tag">CTA = Zavola&#357;</span>
+            <span class="issue-tag">Rovnak&yacute; copy</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=1896628924546429" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Carousel</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>Compass na k&#318;&uacute;&#269;</h4>
+          <p>Carousel kampa&#328; s modelmi baz&eacute;nov. Copy sa opakuje napriec v&scaron;etk&yacute;mi reklamami &mdash; &#382;iadne A/B testovanie.</p>
+          <div class="issues">
+            <span class="issue-tag">Opakuj&uacute;ci sa copy</span>
+            <span class="issue-tag">&#381;iadne A/B testy</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=740609098645468" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Video Ad</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>Classic 73 Nova Anthracite</h4>
+          <p>&#270;al&scaron;&iacute; model &mdash; rovnak&yacute; form&aacute;t, rovnak&yacute; copy, rovnak&eacute; CTA. &Uacute;plne bez vari&aacute;ci&iacute;.</p>
+          <div class="issues">
+            <span class="issue-tag">Identick&yacute; form&aacute;t</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=1824758684894164" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Video Ad</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>AQUA NOVA 77 Nova Gray</h4>
+          <p>Rovnak&yacute; vzor &mdash; video s produktom, rovnak&yacute; copy. Potrebn&eacute; testova&#357; r&ocirc;zne uhly (cena, sez&oacute;na, testimonial).</p>
+          <div class="issues">
+            <span class="issue-tag">&#381;iadny USP testing</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=873293965632446" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Video Ad</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>Compass samoobslu&#382;n&yacute;</h4>
+          <p>Video ad pre samoobslu&#382;n&uacute; in&scaron;tal&aacute;ciu. Mohol by by&#357; siln&yacute; uhol &mdash; ale rovnak&yacute; copy ako ostatn&eacute;.</p>
+          <div class="issues">
+            <span class="issue-tag">Strata potenci&aacute;lu</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=1418903126575740" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="links-box">
+      <p><strong>&#270;al&scaron;ie product ads:</strong></p>
+      <div class="links-wrap">
+        <a href="https://www.facebook.com/ads/library/?id=1410121700581763" target="_blank" class="ad-link sm">Vari&aacute;cia 1</a>
+        <a href="https://www.facebook.com/ads/library/?id=1579904396588623" target="_blank" class="ad-link sm">Vari&aacute;cia 2</a>
+        <a href="https://www.facebook.com/ads/library/?id=1899480957345963" target="_blank" class="ad-link sm">Vari&aacute;cia 3</a>
+        <a href="https://www.facebook.com/ads/library/?id=1210002131108206" target="_blank" class="ad-link sm">Vari&aacute;cia 4</a>
+      </div>
+    </div>
+
+    <!-- CAROUSEL USP -->
+    <div class="cat-header">3. Carousel / Multi-USP Ad</div>
+    <div class="ads-grid">
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Carousel USP</span>
+          <span class="platform">FB + IG + Messenger</span>
+        </div>
+        <div class="ad-body">
+          <h4>Baz&eacute;n na k&#318;&uacute;&#269; &mdash; USP karty</h4>
+          <p>Carousel s kartami: z&aacute;ruka na tesnnos&#357;, &#318;ahk&aacute; &uacute;dr&#382;ba, &#382;iadne spoje, &#382;iadna z&aacute;kladov&aacute; doska, vystu&#382;en&eacute; steny. CTA: kontaktn&aacute; str&aacute;nka + telef&oacute;n + email.</p>
+          <div class="issues">
+            <span class="issue-tag" style="background: var(--dex-blue-10); color: var(--dex-navy);">Dobr&yacute; form&aacute;t</span>
+            <span class="issue-tag">Ch&yacute;ba lead form</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=891297947181143" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- REMARKETING -->
+    <div class="cat-header">4. Remarketing / DPA (feb&ndash;apr 2026)</div>
+    <div class="ads-grid">
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">DPA Retargeting</span>
+          <span class="platform">FB + IG + Messenger + AN</span>
+        </div>
+        <div class="ad-body">
+          <h4>Eshop pr&iacute;slu&scaron;enstvo &mdash; DPA</h4>
+          <p>&bdquo;Prezerali ste si u n&aacute;s...&ldquo; &mdash; &scaron;tandardn&yacute; DPA retargeting. Feedy funguj&uacute; &#269;iasto&#269;ne, ale produktov&eacute; obr&aacute;zky pr&iacute;slu&scaron;enstva s&uacute; low-quality.</p>
+          <div class="issues">
+            <span class="issue-tag">Low-quality obr&aacute;zky</span>
+            <span class="issue-tag">Feed probl&eacute;my</span>
+          </div>
+          <a href="https://www.facebook.com/ads/library/?id=1651136259217696" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Retargeting</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>Baz&eacute;nov&aacute; pohoda retarget</h4>
+          <p>Retargeting kampa&#328; na n&aacute;v&scaron;tevn&iacute;kov str&aacute;nky. &Scaron;tandardn&yacute; setup.</p>
+          <a href="https://www.facebook.com/ads/library/?id=4469582733328979" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Catalog / DPA</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>Keramick&eacute; baz&eacute;ny katal&oacute;g</h4>
+          <p>DPA reklama z produktov&eacute;ho katal&oacute;gu.</p>
+          <a href="https://www.facebook.com/ads/library/?id=1925718571375700" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+      <div class="ad-card">
+        <div class="ad-header">
+          <span class="type">Sez&oacute;na 2026</span>
+          <span class="platform">FB + IG</span>
+        </div>
+        <div class="ad-body">
+          <h4>Sez&oacute;nna kampa&#328; (3.4.2026)</h4>
+          <p>Najnov&scaron;ia sez&oacute;nna kampa&#328; &mdash; spusten&aacute; len pred 2 d&#328;ami.</p>
+          <a href="https://www.facebook.com/ads/library/?id=1475597904156044" target="_blank" class="ad-link">Pozrie&#357; v Ad Library &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="links-box">
+      <p><strong>&#270;al&scaron;ie remarketing ads:</strong></p>
+      <div class="links-wrap">
+        <a href="https://www.facebook.com/ads/library/?id=1565605257880032" target="_blank" class="ad-link sm">Classic 63 produkt</a>
+        <a href="https://www.facebook.com/ads/library/?id=1307064071478834" target="_blank" class="ad-link sm">DPA pr&iacute;slu&scaron;enstvo</a>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <a href="https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=ALL&q=aquapond.sk&search_type=keyword_unordered" target="_blank">
+        Pozrie&#357; v&scaron;etky Meta reklamy v Ad Library &rarr;
+      </a>
+    </div>
+    </div>
+  </section>
+
+  <!-- ═══════ GOOGLE ADS ═══════ -->
+  <section id="google">
+    <h2>Google Ads Anal&yacute;za</h2>
+    <p class="section-sub">~207 akt&iacute;vnych reklam &mdash; 2 inzerentsk&eacute; &uacute;&#269;ty &mdash; Google Ads Transparency Center</p>
+
+    <table class="audit-table">
+      <thead>
+        <tr>
+          <th>&Uacute;&#269;et</th>
+          <th>N&aacute;zov</th>
+          <th>Po&#269;et reklam</th>
+          <th>Identita</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>&Uacute;&#269;et 1</strong></td>
+          <td>Aquapond s.r.o</td>
+          <td>~200 reklam</td>
+          <td>Overen&aacute;</td>
+          <td><span class="badge badge-info">Hlavn&yacute; &uacute;&#269;et</span></td>
+        </tr>
+        <tr>
+          <td><strong>&Uacute;&#269;et 2</strong></td>
+          <td>AQUAPOND s.r.o.</td>
+          <td>~7 reklam</td>
+          <td>Overen&aacute;</td>
+          <td><span class="badge badge-warning">Sekund&aacute;rny</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top: 24px;">
+      <h3 style="font-size: 16px; color: var(--dex-navy); margin-bottom: 16px;">Typy Google reklam</h3>
+
+      <div class="finding">
+        <div class="bar med"></div>
+        <div class="content">
+          <h4>Search Ads (textov&eacute;) <span class="badge badge-warning">Genericke</span></h4>
+          <p>&bdquo;Celoro&#269;n&yacute; servis baz&eacute;nov &mdash; Nov&yacute; baz&eacute;n od odborn&iacute;kov&ldquo; so sitelinkmi: Mont&aacute;&#382; baz&eacute;nov na k&#318;&uacute;&#269;, Farby keramick&yacute;ch baz&eacute;nov. &#270;al&scaron;ia vari&aacute;cia: &bdquo;Aquapond &mdash; viac ako e-shop &mdash; Vyberte si na Aquapond.sk&ldquo;.</p>
+          <div class="rec">
+            <strong>Probl&eacute;m:</strong> Copy je jednotv&aacute;rny &mdash; v&scaron;ade rovnak&yacute; popis. Ch&yacute;baj&uacute; RSA vari&aacute;cie a testovanie headlinov.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="bar med"></div>
+        <div class="content">
+          <h4>Display / Banner Ads <span class="badge badge-warning">Zastaran&eacute;</span></h4>
+          <p>Statick&eacute; bannerov&eacute; reklamy s textom &bdquo;Vo&#318;n&eacute; term&iacute;ny&ldquo; a &bdquo;Sk&uacute;senosti&ldquo; &mdash; s Aquapond logom. Vizu&aacute;lne vyzeraj&uacute; zastaralo, ch&yacute;ba dynamika a produktov&eacute; fotky.</p>
+          <div class="rec">
+            <strong>Probl&eacute;m:</strong> Statick&eacute; bannery namiesto responz&iacute;vnych display reklam. Moderny pr&iacute;stup = Responsive Display Ads s viacerymi vari&aacute;ciami obr&aacute;zkov a textu.
+          </div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="bar high"></div>
+        <div class="content">
+          <h4>Shopping / Product Ads <span class="badge badge-critical">Feedy = hlavn&yacute; probl&eacute;m</span></h4>
+          <p>Klient s&aacute;m hl&aacute;si probl&eacute;my s feedmi &mdash; produkty sa nezobrazuj&uacute; spr&aacute;vne. Pri ~200 reklam&aacute;ch je vysoko pravdepodobn&eacute;, &#382;e Shopping kampane be&#382;ia, ale s problematick&yacute;m feedom.</p>
+          <div class="rec">
+            <strong>Quick Win:</strong> Opravi&#357; feed = okam&#382;it&yacute; dopad na Shopping performance. Potrebujeme pr&iacute;stup do Google Merchant Center.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-box">
+      <a href="https://adstransparency.google.com/advertiser/AR05862473541194088449?region=SK" target="_blank">
+        Pozrie&#357; v&scaron;etky Google reklamy v Transparency Center &rarr;
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════ FINDINGS ═══════ -->
+  <section id="findings" class="alt">
+    <div class="container">
+    <h2>Hlavn&eacute; zistenia</h2>
+    <p class="section-sub">K&#318;&uacute;&#269;ov&eacute; probl&eacute;my zisten&eacute; bez pr&iacute;stupov &mdash; externe</p>
+
+    <div class="finding">
+      <div class="bar med"></div>
+      <div class="content">
+        <h4><span class="badge badge-warning">D&ocirc;le&#382;it&eacute;</span> Hiring ads &mdash; rovnak&yacute; kreat&iacute;v 12+ mesiacov</h4>
+        <p>Obe poz&iacute;cie (mont&aacute;&#382;ny pracovn&iacute;k + predajca) s&uacute; st&aacute;le otvoren&eacute; na webe. Reklamy ale be&#382;ia od marca 2025 s rovnak&yacute;m vizu&aacute;lom a copy &mdash; po roku hroz&iacute; bannerov&aacute; slepota a klesaj&uacute;ci v&yacute;kon.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Refresh kreat&iacute;vu &mdash; nov&yacute; vizu&aacute;l, upraven&yacute; copy, pr&iacute;padne in&yacute; form&aacute;t (video namiesto statick&eacute;ho obr&aacute;zku). Poz&iacute;cie s&uacute; relevantn&eacute;, reklama len potrebuje o&#382;ivenie.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar high"></div>
+      <div class="content">
+        <h4><span class="badge badge-critical">Kritick&eacute;</span> Dva oddelen&eacute; Google &uacute;&#269;ty &mdash; roztrie&scaron;ten&yacute; budget</h4>
+        <p>Na Google maj&uacute; dva inzerentsk&eacute; &uacute;&#269;ty (Aquapond s.r.o a AQUAPOND s.r.o.) s celkovo ~207 reklamami. To znamen&aacute; roztrie&scaron;ten&yacute; budget a &#382;iadny preh&#318;ad.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Konsolidova&#357; na jeden &uacute;&#269;et. Pri budgete 5k/mes a 200+ reklam&aacute;ch je vysoko pravdepodobn&eacute;, &#382;e budget je pr&iacute;li&scaron; rozpt&yacute;len&yacute;.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar med"></div>
+      <div class="content">
+        <h4><span class="badge badge-warning">D&ocirc;le&#382;it&eacute;</span> CTA &bdquo;Zavola&#357;&ldquo; namiesto konverzie</h4>
+        <p>V&auml;&#269;&scaron;ina FB reklam m&aacute; CTA &bdquo;Zavola&#357;&ldquo;. Pre eshop s 2 mil. obratom by mali ma&#357; &bdquo;Nak&uacute;pi&#357;&ldquo; alebo lead form. Straten&aacute; konverzia.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Zmeni&#357; CTA na &bdquo;Nak&uacute;pi&#357;&ldquo; + prida&#357; lead formy pre pohodln&eacute; z&iacute;skanie kontaktov.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar med"></div>
+      <div class="content">
+        <h4><span class="badge badge-warning">D&ocirc;le&#382;it&eacute;</span> &#381;iadne A/B testovanie v Meta Ads</h4>
+        <p>Takmer v&scaron;etky product ads maj&uacute; rovnak&yacute; copy &mdash; len sa men&iacute; model baz&eacute;na. Ch&yacute;baj&uacute; vari&aacute;cie uhlov (cena, sez&oacute;na, porovnanie, testimonial).</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Vytvori&#357; min. 3 uhly copy pre ka&#382;d&yacute; model: sez&oacute;nnos&#357; (&bdquo;E&scaron;te st&iacute;hate na leto&ldquo;), cena (&bdquo;Od X eur/mes&ldquo;), social proof (&bdquo;500+ spokojn&yacute;ch z&aacute;kazn&iacute;kov&ldquo;).</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar med"></div>
+      <div class="content">
+        <h4><span class="badge badge-warning">D&ocirc;le&#382;it&eacute;</span> Genericke Google Search copy</h4>
+        <p>Search ads maj&uacute; jednotv&aacute;rny copy &mdash; v&scaron;ade rovnak&yacute; popis. Ch&yacute;baj&uacute; RSA vari&aacute;cie a testovanie headlinov.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Implementova&#357; RSA s min. 10 headlinmi a 4 popismi. Testova&#357; sez&oacute;nnos&#357;, USP, cenov&eacute; argumenty.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar low"></div>
+      <div class="content">
+        <h4><span class="badge badge-info">Mo&#382;nos&#357;</span> DPA remarketing funguje &mdash; feedy &#269;iasto&#269;ne OK</h4>
+        <p>DPA retargeting je nastaven&yacute;, tak&#382;e feedy &#269;iasto&#269;ne funguj&uacute;. Hlavn&yacute; probl&eacute;m je pravdepodobne v Google Merchant Center feedoch. Obr&aacute;zky pr&iacute;slu&scaron;enstva s&uacute; low-quality.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Prioritne opravi&#357; Google Shopping feed + nahradi&#357; low-quality produktov&eacute; obr&aacute;zky. Toto je najv&auml;&#269;&scaron;&iacute; quick win.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar low"></div>
+      <div class="content">
+        <h4><span class="badge badge-info">Mo&#382;nos&#357;</span> Zastaran&eacute; Display bannery</h4>
+        <p>Statick&eacute; bannery namiesto modernych Responsive Display reklam. Ch&yacute;baj&uacute; dynamick&eacute; form&aacute;ty.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Nahradi&#357; statick&eacute; bannery za Responsive Display Ads + Performance Max kampane.</div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ═══════ SUMMARY ═══════ -->
+  <div class="container">
+    <div class="summary-box">
+      <div class="circle-dec c1"></div>
+      <div class="circle-dec c2"></div>
+      <h2>Celkov&eacute; hodnotenie</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="val">5/10</div>
+          <div class="label-title">Meta Ads</div>
+          <div class="desc">OK z&aacute;klad, ale bez testovania a zl&eacute; CTA</div>
+        </div>
+        <div class="summary-item">
+          <div class="val">4/10</div>
+          <div class="label-title">Google Ads</div>
+          <div class="desc">Roztrie&scaron;ten&aacute; &scaron;trukt&uacute;ra, 2 &uacute;&#269;ty, generick&eacute; copy</div>
+        </div>
+        <div class="summary-item">
+          <div class="val">3/10</div>
+          <div class="label-title">Shopping / Feedy</div>
+          <div class="desc">Hlavn&yacute; probl&eacute;m &mdash; klient s&aacute;m potvrzuje</div>
+        </div>
+        <div class="summary-item">
+          <div class="val">9/10</div>
+          <div class="label-title">Potenci&aacute;l</div>
+          <div class="desc">Quick winy, ktor&eacute; poc&iacute;ti za 2&ndash;3 t&yacute;&#382;dne</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ RECOMMENDATIONS ═══════ -->
+  <section id="recs">
+    <div class="container">
+    <h2>Odpor&uacute;&#269;ania</h2>
+    <p class="section-sub">Trojkrokov&yacute; pl&aacute;n &mdash; od okam&#382;it&yacute;ch akci&iacute; po dlhodob&uacute; strat&eacute;giu</p>
+
+    <div class="rec-timeline">
+      <div class="rec-step">
+        <div class="step-label">Krok 1 &mdash; Okam&#382;ite</div>
+        <h3>Platen&yacute; audit + pr&iacute;stup</h3>
+        <p>Klient s&uacute;hlasil s platen&yacute;m auditom. Potrebujeme pr&iacute;stupy.</p>
+        <ul>
+          <li>Z&iacute;ska&#357; pr&iacute;stup: Google Ads, Google Merchant Center, Google Analytics, Facebook Ads Manager</li>
+          <li>Kompletn&yacute; PPC audit &mdash; kampane, skupiny reklam, k&#318;&uacute;&#269;ov&eacute; slova, bidding</li>
+          <li>Feed audit &mdash; kvalita dat, obr&aacute;zky, titulky, ceny, dostupnos&#357;</li>
+          <li>Shopping kampane &mdash; &scaron;trukt&uacute;ra, bidding, performance pod&#318;a produktov</li>
+        </ul>
+      </div>
+
+      <div class="rec-step">
+        <div class="step-label">Krok 2 &mdash; Quick wins (do 2&ndash;3 t&yacute;&#382;d&#328;ov)</div>
+        <h3>Feed fix + konsolid&aacute;cia + kreat&iacute;vy</h3>
+        <p>Najr&yacute;chlej&scaron;&iacute; dopad na tr&#382;by &mdash; klient poc&iacute;ti zmenu e&scaron;te pred koncom apr&iacute;la.</p>
+        <ul>
+          <li><strong>Feed fix</strong> &mdash; oprava produktov&eacute;ho feedu v Google Merchant Center (najv&auml;&#269;&scaron;&iacute; quick win)</li>
+          <li><strong>Konsolid&aacute;cia Google &uacute;&#269;tov</strong> &mdash; jeden &uacute;&#269;et, lep&scaron;ia kontrola budgetu</li>
+          <li><strong>Shopping/PMax optimaliz&aacute;cia</strong> &mdash; korektn&aacute; kampa&#328;ov&aacute; &scaron;trukt&uacute;ra</li>
+          <li><strong>FB kreat&iacute;vy</strong> &mdash; vari&aacute;cie copy, zlep&scaron;en&eacute; CTA (&bdquo;Nak&uacute;pi&#357;&ldquo; + lead formy), vypnutie hiring ads</li>
+          <li><strong>A/B testovanie</strong> &mdash; minim&aacute;lne 3 uhly copy na ka&#382;d&yacute; produkt</li>
+        </ul>
+      </div>
+
+      <div class="rec-step">
+        <div class="step-label">Krok 3 &mdash; Dlhodob&aacute; spolupr&aacute;ca</div>
+        <h3>Proakt&iacute;vna komunik&aacute;cia + expanzia</h3>
+        <p>Adresova&#357; jeho hlavn&yacute; pain &mdash; chce agent&uacute;ru, ktor&aacute; komunikuje a prin&aacute;&scaron;a n&aacute;pady.</p>
+        <ul>
+          <li><strong>Pravideln&eacute; reporty</strong> &mdash; t&yacute;&#382;de&#328;n&eacute;/mesa&#269;n&eacute; + mesa&#269;n&eacute; cally</li>
+          <li><strong>Sez&oacute;nna strat&eacute;gia</strong> &mdash; apr&iacute;l&ndash;j&uacute;n je peak, maximalizova&#357; teraz</li>
+          <li><strong>Roz&scaron;&iacute;renie kan&aacute;lov</strong> &mdash; Pinterest, TikTok (baz&eacute;ny = vizu&aacute;lny produkt)</li>
+          <li><strong>Responsive Display Ads</strong> &mdash; nahradi&#357; zastaran&eacute; statick&eacute; bannery</li>
+          <li><strong>RSA implement&aacute;cia</strong> &mdash; min. 10 headlinov + 4 popisy v Search kampa&#328;ach</li>
+        </ul>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- ═══════ BUDGET ═══════ -->
+  <section class="alt">
+    <div class="container">
+    <h2>Budget &amp; odhad</h2>
+    <table class="audit-table">
+      <thead>
+        <tr>
+          <th>Polo&#382;ka</th>
+          <th>S&uacute;&#269;asn&yacute; stav</th>
+          <th>Odpor&uacute;&#269;anie</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Celkov&yacute; media budget</td>
+          <td>~5 000 &euro;/mes</td>
+          <td>Zachova&#357;, optimalizova&#357; rozdelenie</td>
+        </tr>
+        <tr>
+          <td>Rozdelenie kan&aacute;lov</td>
+          <td>~70&ndash;75% Google, 25&ndash;30% Meta</td>
+          <td>Overi&#357; po audite &mdash; mo&#382;n&yacute; rebalance</td>
+        </tr>
+        <tr>
+          <td>Servis agent&uacute;re</td>
+          <td>~800 &euro;/mes (s&uacute;&#269;asn&aacute; agent&uacute;ra)</td>
+          <td>Potrebn&eacute; ~1 600 &euro;/mes pre kvalitn&yacute; servis</td>
+        </tr>
+        <tr>
+          <td>Platen&yacute; audit</td>
+          <td>&mdash;</td>
+          <td>Jednorazov&yacute; &mdash; klient s&uacute;hlasil</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+</div>
+
+  <!-- ═══════ HEUREKA & SOCIAL PROOF ═══════ -->
+  <section id="heureka">
+    <div class="container">
+    <h2>Social proof &mdash; Heureka recenzie</h2>
+    <p class="section-sub">468 recenz&iacute;, hodnotenie 4,9/5, 100% odpor&uacute;&#269;a &mdash; nev&yacute;u&#382;it&yacute; potenci&aacute;l</p>
+
+    <div class="metrics-grid" style="margin-bottom: 32px;">
+      <div class="metric-card">
+        <h3>Hodnotenie</h3>
+        <div class="value">4,9 / 5</div>
+        <div class="desc">celkov&aacute; spokojnos&#357; s obchodom</div>
+      </div>
+      <div class="metric-card">
+        <h3>Recenzie</h3>
+        <div class="value">468</div>
+        <div class="desc">overen&yacute;ch z&aacute;kazn&iacute;kov</div>
+      </div>
+      <div class="metric-card">
+        <h3>Odpor&uacute;&#269;a</h3>
+        <div class="value">100%</div>
+        <div class="desc">za posledn&yacute;ch 90 dn&iacute;</div>
+      </div>
+      <div class="metric-card">
+        <h3>Dodanie</h3>
+        <div class="value">3,5 d&#328;a</div>
+        <div class="desc">priemern&aacute; doba, 100% do 6 dn&iacute;</div>
+      </div>
+    </div>
+
+    <div class="cat-header">Najlep&scaron;ie recenzie na pou&#382;itie v rekl&aacute;mach</div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; margin-top: 16px;">
+
+      <div style="background: var(--dex-white); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--dex-border); border-left: 4px solid var(--dex-blue); position: relative;">
+        <div style="font-size: 36px; color: var(--dex-blue); opacity: 0.15; position: absolute; top: 8px; right: 16px; font-family: Georgia, serif;">&ldquo;</div>
+        <p style="font-size: 14px; font-family: var(--font-secondary); color: var(--dex-navy); font-style: italic; margin-bottom: 8px;">&bdquo;&Uacute;&#382;asn&yacute; proklientsk&yacute; pr&iacute;stup a vybavenie po&#382;iadavky do 24 hod&iacute;n.&ldquo;</p>
+        <p style="font-size: 12px; font-family: var(--font-secondary); color: var(--dex-muted);">&mdash; Boris L., overen&yacute; z&aacute;kazn&iacute;k</p>
+        <div style="margin-top: 8px;"><span class="badge badge-info">Proklientsk&yacute; pr&iacute;stup</span> <span class="badge badge-info">R&yacute;chlos&#357;</span></div>
+      </div>
+
+      <div style="background: var(--dex-white); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--dex-border); border-left: 4px solid var(--dex-blue); position: relative;">
+        <div style="font-size: 36px; color: var(--dex-blue); opacity: 0.15; position: absolute; top: 8px; right: 16px; font-family: Georgia, serif;">&ldquo;</div>
+        <p style="font-size: 14px; font-family: var(--font-secondary); color: var(--dex-navy); font-style: italic; margin-bottom: 8px;">&bdquo;Extr&eacute;mne r&yacute;chle doru&#269;enie, kvalitn&yacute; tovar, dobre zabalen&yacute;.&ldquo;</p>
+        <p style="font-size: 12px; font-family: var(--font-secondary); color: var(--dex-muted);">&mdash; Peter, overen&yacute; z&aacute;kazn&iacute;k (tovar dorazil za 1 de&#328;)</p>
+        <div style="margin-top: 8px;"><span class="badge badge-info">Doru&#269;enie</span> <span class="badge badge-info">Kvalita</span></div>
+      </div>
+
+      <div style="background: var(--dex-white); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--dex-border); border-left: 4px solid var(--dex-blue); position: relative;">
+        <div style="font-size: 36px; color: var(--dex-blue); opacity: 0.15; position: absolute; top: 8px; right: 16px; font-family: Georgia, serif;">&ldquo;</div>
+        <p style="font-size: 14px; font-family: var(--font-secondary); color: var(--dex-navy); font-style: italic; margin-bottom: 8px;">&bdquo;Mil&aacute; obsluha, r&yacute;chle dodanie, rozumej&uacute; tomu &#269;o pred&aacute;vaj&uacute;.&ldquo;</p>
+        <p style="font-size: 12px; font-family: var(--font-secondary); color: var(--dex-muted);">&mdash; Overen&yacute; z&aacute;kazn&iacute;k</p>
+        <div style="margin-top: 8px;"><span class="badge badge-info">Odbornos&#357;</span> <span class="badge badge-info">Obsluha</span></div>
+      </div>
+
+      <div style="background: var(--dex-white); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--dex-border); border-left: 4px solid var(--dex-blue); position: relative;">
+        <div style="font-size: 36px; color: var(--dex-blue); opacity: 0.15; position: absolute; top: 8px; right: 16px; font-family: Georgia, serif;">&ldquo;</div>
+        <p style="font-size: 14px; font-family: var(--font-secondary); color: var(--dex-navy); font-style: italic; margin-bottom: 8px;">&bdquo;V&yacute;born&aacute; komunik&aacute;cia, &scaron;irok&yacute; kvalitn&yacute; sortiment aj skladov&eacute; z&aacute;soby. Vrelo odpor&uacute;&#269;am ka&#382;d&eacute;mu.&ldquo;</p>
+        <p style="font-size: 12px; font-family: var(--font-secondary); color: var(--dex-muted);">&mdash; Overen&yacute; z&aacute;kazn&iacute;k</p>
+        <div style="margin-top: 8px;"><span class="badge badge-info">Sortiment</span> <span class="badge badge-info">Komunik&aacute;cia</span></div>
+      </div>
+
+      <div style="background: var(--dex-white); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--dex-border); border-left: 4px solid var(--dex-blue); position: relative;">
+        <div style="font-size: 36px; color: var(--dex-blue); opacity: 0.15; position: absolute; top: 8px; right: 16px; font-family: Georgia, serif;">&ldquo;</div>
+        <p style="font-size: 14px; font-family: var(--font-secondary); color: var(--dex-navy); font-style: italic; margin-bottom: 8px;">&bdquo;Osobn&yacute; pr&iacute;stup, v&#382;dy fungovala komunik&aacute;cia.&ldquo;</p>
+        <p style="font-size: 12px; font-family: var(--font-secondary); color: var(--dex-muted);">&mdash; Alena, overen&aacute; z&aacute;kazn&iacute;&#269;ka</p>
+        <div style="margin-top: 8px;"><span class="badge badge-info">Osobn&yacute; pr&iacute;stup</span></div>
+      </div>
+
+      <div style="background: var(--dex-white); border-radius: var(--radius-md); padding: 24px; box-shadow: var(--shadow); border: 1px solid var(--dex-border); border-left: 4px solid var(--dex-blue); position: relative;">
+        <div style="font-size: 36px; color: var(--dex-blue); opacity: 0.15; position: absolute; top: 8px; right: 16px; font-family: Georgia, serif;">&ldquo;</div>
+        <p style="font-size: 14px; font-family: var(--font-secondary); color: var(--dex-navy); font-style: italic; margin-bottom: 8px;">&bdquo;Odpor&uacute;&#269;am, asi jedin&yacute; obchod ktor&yacute; poskytuje podrobn&eacute; poradenstvo...&ldquo;</p>
+        <p style="font-size: 12px; font-family: var(--font-secondary); color: var(--dex-muted);">&mdash; Milo&scaron;, overen&yacute; z&aacute;kazn&iacute;k</p>
+        <div style="margin-top: 8px;"><span class="badge badge-info">Poradenstvo</span> <span class="badge badge-info">Jedin&eacute;&#269;nos&#357;</span></div>
+      </div>
+
+    </div>
+
+    <div class="cat-header" style="margin-top: 40px;">Ako vyu&#382;i&#357; recenzie &mdash; odpor&uacute;&#269;ania</div>
+
+    <div class="finding">
+      <div class="bar med"></div>
+      <div class="content">
+        <h4><span class="badge badge-warning">D&ocirc;le&#382;it&eacute;</span> Pou&#382;i&#357; recenzie v Meta Ads copy</h4>
+        <p>S&uacute;&#269;asn&eacute; reklamy nemaj&uacute; &#382;iadny social proof. Pritom 468 recenz&iacute; s hodnotením 4,9/5 je siln&yacute; argument.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Prida&#357; do product ads copy vari&aacute;cie so social proof: &bdquo;4,9/5 na Heureke&ldquo;, &bdquo;468 spokojn&yacute;ch z&aacute;kazn&iacute;kov&ldquo;, alebo priamo cit&aacute;ty z recenz&iacute; ako &bdquo;&Uacute;&#382;asn&yacute; proklientsk&yacute; pr&iacute;stup&ldquo;.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar med"></div>
+      <div class="content">
+        <h4><span class="badge badge-warning">D&ocirc;le&#382;it&eacute;</span> Social proof na webe &mdash; konverzn&yacute; pomer</h4>
+        <p>Na aquapond.sk ch&yacute;baj&uacute; vidte&#318;n&eacute; referencie a hodnotenia priamo na produktov&yacute;ch str&aacute;nkach a homepage. Heureka widget alebo sekcia &bdquo;&#268;o hovoria z&aacute;kazn&iacute;ci&ldquo; m&ocirc;&#382;e v&yacute;razne zv&yacute;&scaron;i&#357; konverzie.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Prida&#357; na web: (1) Heureka badge s hodnotením do headeru/footeru, (2) sekciu s top recenziami na homepage, (3) produktov&eacute; recenzie na produktov&yacute;ch str&aacute;nkach.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar low"></div>
+      <div class="content">
+        <h4><span class="badge badge-info">Mo&#382;nos&#357;</span> Kreat&iacute;vy postaven&eacute; na recenzi&aacute;ch</h4>
+        <p>Grafiky a video reklamy m&ocirc;&#382;u pracova&#357; s cit&aacute;tmi z&aacute;kazn&iacute;kov &mdash; testimonial form&aacute;t je jeden z najefekt&iacute;vnej&scaron;&iacute;ch v performance marketingu.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Vytvori&#357; sadu kreat&iacute;vov s cit&aacute;tmi: (1) statick&eacute; grafiky &bdquo;Cit&aacute;t + produkt + hodnotenie&ldquo;, (2) video komp&aacute;cia recenz&iacute;, (3) carousel s r&ocirc;znymi recenziami. K&#318;&uacute;&#269;ov&eacute; t&eacute;my z recenz&iacute;: <strong>r&yacute;chle dodanie</strong>, <strong>odborn&eacute; poradenstvo</strong>, <strong>osobn&yacute; pr&iacute;stup</strong>, <strong>kvalitn&yacute; sortiment</strong>.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="bar low"></div>
+      <div class="content">
+        <h4><span class="badge badge-info">Mo&#382;nos&#357;</span> Google Ads &mdash; seller ratings a extensions</h4>
+        <p>468 recenz&iacute; s hodnotením 4,9/5 kvalifikuje na Google Seller Ratings &mdash; hviezdi&#269;ky priamo v Search ads zv&yacute;&scaron;ia CTR o 10&ndash;17%.</p>
+        <div class="rec"><strong>Odpor&uacute;&#269;anie:</strong> Overi&#357; &#269;i s&uacute; Seller Ratings akt&iacute;vne v Google Ads. Ak nie, nastavi&#357; propojenie s Heureka feed. Tie&#382; pou&#382;i&#357; review extensions v Search kampaniach.</div>
+      </div>
+    </div>
+
+    <div class="cta-box" style="margin-top: 24px;">
+      <a href="https://obchody.heureka.sk/aquapond-sk/recenze/" target="_blank">
+        Pozrie&#357; v&scaron;etk&yacute;ch 468 recenz&iacute; na Heureke &rarr;
+      </a>
+    </div>
+    </div>
+  </section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="circle-f f1"></div>
+  <div class="circle-f f2"></div>
+  <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Dark-Landscape@2x.png" alt="Dexfinity" class="footer-logo">
+  <p>External Ads Audit &mdash; Aquapond.sk &mdash; Pripraven&eacute; 4. apr&iacute;la 2026</p>
+  <p>Na z&aacute;klade verejne dostupn&yacute;ch d&aacute;t z Meta Ad Library a Google Ads Transparency Center.</p>
+  <div class="go-beyond">Go Beyond</div>
+</footer>
+
+</body>
+</html>
