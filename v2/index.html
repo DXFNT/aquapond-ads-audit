@@ -1084,6 +1084,47 @@
       border: 1px solid rgba(255,255,255,0.3);
     }
     .pricing-cta.secondary:hover { border-color: var(--dex-white); }
+
+    /* ─── FLIP CARD ─── */
+    .flip-card {
+      perspective: 1200px;
+      min-height: 520px;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-front, .flip-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: var(--radius-lg);
+    }
+    .flip-front {
+      z-index: 2;
+    }
+    .flip-back {
+      transform: rotateY(180deg);
+      z-index: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .flip-card.featured .flip-back {
+      background: rgba(0, 101, 247, 0.12);
+      border-color: var(--dex-blue);
+    }
     .pricing-note {
       text-align: center;
       margin-top: 32px;
@@ -2357,6 +2398,7 @@
         <div class="locked-title">Skuto&#269;n&yacute; ROAS va&scaron;ich kampan&iacute;</div>
         <div class="locked-desc">Ko&#318;ko eur v&aacute;m ka&#382;d&aacute; kampa&#328; skuto&#269;ne zarob&iacute; &mdash; a ktor&eacute; len s&uacute; stratov&eacute;</div>
         <div class="locked-badge">Vy&#382;aduje pr&iacute;stup do Google Ads + Meta Ads Manager</div>
+        <a class="pricing-cta primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" style="margin-top:16px; display:inline-block; padding:10px 28px; font-size:14px; cursor:pointer;">Odomkn&uacute;&#357; &rarr;</a>
       </div>
       <div class="locked-content">
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
@@ -2379,6 +2421,7 @@
         <div class="locked-title">Kde presne str&aacute;cate budget</div>
         <div class="locked-desc">Negat&iacute;vne k&#318;&uacute;&#269;ov&eacute; slov&aacute;, audience overlap, feed chyby a wasted impressions</div>
         <div class="locked-badge">Vy&#382;aduje pr&iacute;stup do Google Ads + Merchant Center + Analytics</div>
+        <a class="pricing-cta primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" style="margin-top:16px; display:inline-block; padding:10px 28px; font-size:14px; cursor:pointer;">Odomkn&uacute;&#357; &rarr;</a>
       </div>
       <div class="locked-content">
         <div class="finding"><div class="bar high"></div><div class="content"><h4>Negat&iacute;vne keywords anal&yacute;za</h4><p>Vyh&#318;ad&aacute;vacie v&yacute;razy ktor&eacute; sp&uacute;&scaron;&#357;aj&uacute; va&scaron;e reklamy ale nekonvertuj&uacute;. Odhad zbyte&#269;ne minutých eur mesa&#269;ne.</p></div></div>
@@ -2397,6 +2440,7 @@
         <div class="locked-title">Personaliz&aacute;van&yacute; ak&#269;n&yacute; pl&aacute;n s odhadom ROI</div>
         <div class="locked-desc">Presn&yacute; pl&aacute;n &#269;o opravi&#357;, v akom porad&iacute; a ko&#318;ko v&aacute;m to prinesie</div>
         <div class="locked-badge">S&uacute;&#269;as&#357; Full Setup &mdash; vr&aacute;tane 60min konzult&aacute;cie</div>
+        <a class="pricing-cta primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})" style="margin-top:16px; display:inline-block; padding:10px 28px; font-size:14px; cursor:pointer;">Odomkn&uacute;&#357; &rarr;</a>
       </div>
       <div class="locked-content">
         <div class="rec-timeline">
@@ -2450,50 +2494,113 @@
     </div>
 
     <div class="pricing-cards">
-      <!-- Card 1: Full Audit -->
-      <div class="pricing-card">
-        <h3>Full Audit + konzult&aacute;cia</h3>
-        <div class="card-desc">Kompletn&yacute; intern&yacute; audit v&scaron;etk&yacute;ch kan&aacute;lov + 60min strategick&aacute; konzult&aacute;cia</div>
-        <div class="price">
-          <span class="old">1 590&euro;</span>
-          <span class="current">1 290&euro;</span>
-          <span class="period">jednorazovo</span>
+      <!-- Card 1: Full Audit (flip) -->
+      <div class="flip-card" id="flipAudit">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div class="pricing-card" style="position:relative; height:100%;">
+              <h3>Full Audit + konzult&aacute;cia</h3>
+              <div class="card-desc">Kompletn&yacute; intern&yacute; audit v&scaron;etk&yacute;ch kan&aacute;lov + 60min strategick&aacute; konzult&aacute;cia</div>
+              <div class="price">
+                <span class="old">1 590&euro;</span>
+                <span class="current">1 290&euro;</span>
+                <span class="period">jednorazovo</span>
+              </div>
+              <ul class="features">
+                <li><span class="check">&#10003;</span> V&scaron;etko z tohto extern&eacute;ho auditu (690&euro;)</li>
+                <li><span class="check">&#10003;</span> Intern&yacute; Google Ads audit (CPC, ROAS, Quality Score)</li>
+                <li><span class="check">&#10003;</span> Intern&yacute; Meta Ads audit (audiences, attribution)</li>
+                <li><span class="check">&#10003;</span> Google Merchant Center &amp; feed audit</li>
+                <li><span class="check">&#10003;</span> Kontrola nastavenia Google Analytics*</li>
+                <li><span class="check">&#10003;</span> Personaliz&aacute;van&yacute; ak&#269;n&yacute; pl&aacute;n s ROI odhadom</li>
+                <li><span class="check">&#10003;</span> 60min konzult&aacute;cia s PPC &scaron;pecialistom</li>
+              </ul>
+              <a class="pricing-cta secondary" onclick="flipCard('flipAudit')">Chcem Full Audit &rarr;</a>
+              <p style="text-align: center; margin-top: 12px; font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">= doplatok 600&euro; k tomuto extern&eacute;mu auditu</p>
+            </div>
+          </div>
+          <div class="flip-back">
+            <div style="text-align:center; margin-bottom:20px;">
+              <div style="font-size:11px; font-weight:600; font-family:var(--font-secondary); text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.5); margin-bottom:8px;">Full Audit + konzult&aacute;cia</div>
+              <div style="font-size:36px; font-weight:700; font-family:var(--font-secondary); color:var(--dex-white);">1 290&euro;</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:20px; margin-bottom:16px;">
+              <h4 style="font-size:13px; font-family:var(--font-secondary); font-weight:600; color:var(--dex-white); margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#0065F7"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                Platobn&eacute; &uacute;daje
+              </h4>
+              <table style="width:100%; font-family:var(--font-secondary); font-size:13px;">
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:6px 0; color:rgba(255,255,255,0.5);">IBAN</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:600; font-size:12px;">SK18 0900 0000 0050 5804 0235 <button onclick="event.stopPropagation();navigator.clipboard.writeText('SK1809000000005058040235');this.textContent='OK!';var b=this;setTimeout(function(){b.textContent='Kop.'},1500)" style="background:none;border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:1px 6px;cursor:pointer;font-size:10px;color:#0065F7;margin-left:4px;">Kop.</button></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:6px 0; color:rgba(255,255,255,0.5);">Pr&iacute;jemca</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:600;">Dexfinity s.r.o.</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:6px 0; color:rgba(255,255,255,0.5);">VS</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:600;">2026040501</td></tr>
+                <tr><td style="padding:6px 0; color:rgba(255,255,255,0.5);">Suma</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:700; font-size:18px;">1 290,00&euro;</td></tr>
+              </table>
+            </div>
+            <div style="background:linear-gradient(135deg,#0065F7,#0052cc); border-radius:10px; padding:14px 16px; margin-bottom:16px;">
+              <p style="font-size:12px; font-family:var(--font-secondary); color:var(--dex-white); line-height:1.7; margin:0;">
+                <strong>Po platbe:</strong> kontaktujeme v&aacute;s do 24h &rarr; po&scaron;leme formul&aacute;r na pr&iacute;stupy &rarr; do 5&ndash;7 dn&iacute; m&aacute;te audit &rarr; 60min konzult&aacute;cia
+              </p>
+            </div>
+            <p style="text-align:center; font-size:12px; font-family:var(--font-secondary); color:rgba(255,255,255,0.4); margin-bottom:12px;">Ot&aacute;zky? <a href="mailto:hello@dex.sk" style="color:#0065F7; text-decoration:none;">hello@dex.sk</a> | <a href="tel:+421918435105" style="color:#0065F7; text-decoration:none;">+421 918 435 105</a></p>
+            <a class="pricing-cta secondary" onclick="flipCard('flipAudit')" style="font-size:13px; padding:10px 20px;">&larr; Sp&auml;&#357; na preh&#318;ad</a>
+          </div>
         </div>
-        <ul class="features">
-          <li><span class="check">&#10003;</span> V&scaron;etko z tohto extern&eacute;ho auditu (690&euro;)</li>
-          <li><span class="check">&#10003;</span> Intern&yacute; Google Ads audit (CPC, ROAS, Quality Score)</li>
-          <li><span class="check">&#10003;</span> Intern&yacute; Meta Ads audit (audiences, attribution)</li>
-          <li><span class="check">&#10003;</span> Google Merchant Center &amp; feed audit</li>
-          <li><span class="check">&#10003;</span> Kontrola nastavenia Google Analytics*</li>
-          <li><span class="check">&#10003;</span> Personaliz&aacute;van&yacute; ak&#269;n&yacute; pl&aacute;n s ROI odhadom</li>
-          <li><span class="check">&#10003;</span> 60min konzult&aacute;cia s PPC &scaron;pecialistom</li>
-        </ul>
-        <a class="pricing-cta secondary" onclick="openPayment('audit')">Chcem Full Audit &rarr;</a>
-        <p style="text-align: center; margin-top: 12px; font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">= doplatok 600&euro; k tomuto extern&eacute;mu auditu</p>
       </div>
 
-      <!-- Card 2: Full Setup (featured) -->
-      <div class="pricing-card featured">
-        <div class="card-badge">Odpor&uacute;&#269;ame</div>
-        <h3>Full Setup + spr&aacute;va kampan&iacute;</h3>
-        <div class="card-desc">Kompletn&yacute; audit + nastavenie + realiz&aacute;cia v&scaron;etk&yacute;ch odpor&uacute;&#269;an&iacute;</div>
-        <div class="price">
-          <span class="old">2 090&euro;</span>
-          <span class="current">1 690&euro;</span>
-          <span class="period">jednorazov&yacute; setup</span>
+      <!-- Card 2: Full Setup (flip, featured) -->
+      <div class="flip-card featured" id="flipSetup">
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <div class="pricing-card featured" style="position:relative; height:100%;">
+              <div class="card-badge">Odpor&uacute;&#269;ame</div>
+              <h3>Full Setup + spr&aacute;va kampan&iacute;</h3>
+              <div class="card-desc">Kompletn&yacute; audit + nastavenie + realiz&aacute;cia v&scaron;etk&yacute;ch odpor&uacute;&#269;an&iacute;</div>
+              <div class="price">
+                <span class="old">2 090&euro;</span>
+                <span class="current">1 690&euro;</span>
+                <span class="period">jednorazov&yacute; setup</span>
+              </div>
+              <ul class="features">
+                <li><span class="check">&#10003;</span> V&scaron;etko z Full Auditu (1 290&euro;)</li>
+                <li><span class="check">&#10003;</span> Kontrola nastavenia Google Analytics*</li>
+                <li><span class="check">&#10003;</span> Kompletn&eacute; nastavenie kampan&iacute;</li>
+                <li><span class="check">&#10003;</span> Feed fix + Shopping/PMax relaunch</li>
+                <li><span class="check">&#10003;</span> Nov&eacute; kreat&iacute;vy + A/B testy</li>
+                <li><span class="check">&#10003;</span> RSA implement&aacute;cia + negative keywords</li>
+                <li><span class="check">&#10003;</span> 60min konzult&aacute;cia + onboarding</li>
+                <li style="padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.15); margin-top: 4px;"><span class="check" style="color: var(--dex-blue);">+</span> <strong>Mesa&#269;n&aacute; spr&aacute;va od 990&euro;/mes</strong></li>
+              </ul>
+              <a class="pricing-cta primary" onclick="flipCard('flipSetup')">Chcem spr&aacute;vu kampan&iacute; &rarr;</a>
+              <p style="text-align: center; margin-top: 12px; font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">= menej ako 10 dn&iacute; v&aacute;&scaron;ho ad spendu</p>
+            </div>
+          </div>
+          <div class="flip-back">
+            <div style="text-align:center; margin-bottom:20px;">
+              <div style="font-size:11px; font-weight:600; font-family:var(--font-secondary); text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.5); margin-bottom:8px;">Full Setup + spr&aacute;va kampan&iacute;</div>
+              <div style="font-size:36px; font-weight:700; font-family:var(--font-secondary); color:var(--dex-white);">1 690&euro;</div>
+              <div style="font-size:12px; font-family:var(--font-secondary); color:rgba(255,255,255,0.4);">jednorazov&yacute; setup + od 990&euro;/mes</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.08); border-radius:12px; padding:20px; margin-bottom:16px;">
+              <h4 style="font-size:13px; font-family:var(--font-secondary); font-weight:600; color:var(--dex-white); margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#0065F7"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                Platobn&eacute; &uacute;daje
+              </h4>
+              <table style="width:100%; font-family:var(--font-secondary); font-size:13px;">
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:6px 0; color:rgba(255,255,255,0.5);">IBAN</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:600; font-size:12px;">SK18 0900 0000 0050 5804 0235 <button onclick="event.stopPropagation();navigator.clipboard.writeText('SK1809000000005058040235');this.textContent='OK!';var b=this;setTimeout(function(){b.textContent='Kop.'},1500)" style="background:none;border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:1px 6px;cursor:pointer;font-size:10px;color:#0065F7;margin-left:4px;">Kop.</button></td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:6px 0; color:rgba(255,255,255,0.5);">Pr&iacute;jemca</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:600;">Dexfinity s.r.o.</td></tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:6px 0; color:rgba(255,255,255,0.5);">VS</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:600;">2026040502</td></tr>
+                <tr><td style="padding:6px 0; color:rgba(255,255,255,0.5);">Suma</td><td style="padding:6px 0; color:var(--dex-white); text-align:right; font-weight:700; font-size:18px;">1 690,00&euro;</td></tr>
+              </table>
+            </div>
+            <div style="background:linear-gradient(135deg,#0065F7,#0052cc); border-radius:10px; padding:14px 16px; margin-bottom:16px;">
+              <p style="font-size:12px; font-family:var(--font-secondary); color:var(--dex-white); line-height:1.7; margin:0;">
+                <strong>Po platbe:</strong> kontaktujeme v&aacute;s do 24h &rarr; po&scaron;leme formul&aacute;r na pr&iacute;stupy &rarr; do 5&ndash;7 dn&iacute; kompletn&yacute; audit + setup &rarr; 60min onboarding
+              </p>
+            </div>
+            <p style="text-align:center; font-size:12px; font-family:var(--font-secondary); color:rgba(255,255,255,0.4); margin-bottom:12px;">Ot&aacute;zky? <a href="mailto:hello@dex.sk" style="color:#0065F7; text-decoration:none;">hello@dex.sk</a> | <a href="tel:+421918435105" style="color:#0065F7; text-decoration:none;">+421 918 435 105</a></p>
+            <a class="pricing-cta primary" onclick="flipCard('flipSetup')" style="font-size:13px; padding:10px 20px;">&larr; Sp&auml;&#357; na preh&#318;ad</a>
+          </div>
         </div>
-        <ul class="features">
-          <li><span class="check">&#10003;</span> V&scaron;etko z Full Auditu (1 290&euro;)</li>
-          <li><span class="check">&#10003;</span> Kontrola nastavenia Google Analytics*</li>
-          <li><span class="check">&#10003;</span> Kompletn&eacute; nastavenie kampan&iacute;</li>
-          <li><span class="check">&#10003;</span> Feed fix + Shopping/PMax relaunch</li>
-          <li><span class="check">&#10003;</span> Nov&eacute; kreat&iacute;vy + A/B testy</li>
-          <li><span class="check">&#10003;</span> RSA implement&aacute;cia + negative keywords</li>
-          <li><span class="check">&#10003;</span> 60min konzult&aacute;cia + onboarding</li>
-          <li style="padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.15); margin-top: 4px;"><span class="check" style="color: var(--dex-blue);">+</span> <strong>Mesa&#269;n&aacute; spr&aacute;va od 990&euro;/mes</strong></li>
-        </ul>
-        <a class="pricing-cta primary" onclick="openPayment('setup')">Chcem spr&aacute;vu kampan&iacute; &rarr;</a>
-        <p style="text-align: center; margin-top: 12px; font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">= menej ako 10 dn&iacute; v&aacute;&scaron;ho ad spendu</p>
       </div>
     </div>
 
@@ -2544,7 +2651,7 @@
           <tr style="border-bottom:1px solid #E5E7EB;">
             <td style="padding:8px 0; color:#6B7280;">IBAN</td>
             <td style="padding:8px 0; font-weight:600; color:#05024E; text-align:right;">
-              <span id="ibanValue">SK00 0000 0000 0000 0000 0000</span>
+              <span id="ibanValue">SK18 0900 0000 0050 5804 0235</span>
               <button onclick="copyIBAN()" style="background:none; border:1px solid #E5E7EB; border-radius:6px; padding:2px 8px; margin-left:8px; cursor:pointer; font-size:11px; color:#0065F7;">Kop&iacute;rova&#357;</button>
             </td>
           </tr>
@@ -2592,6 +2699,10 @@
 </div>
 
 <script>
+function flipCard(id) {
+  document.getElementById(id).classList.toggle('flipped');
+}
+
 function openPayment(type) {
   var modal = document.getElementById('paymentModal');
   var badge = document.getElementById('modalBadge');
