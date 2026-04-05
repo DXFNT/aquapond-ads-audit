@@ -20,6 +20,8 @@
       --dex-text: #1A1A2E;
       --dex-muted: #6B7280;
       --dex-border: #E5E7EB;
+      --dex-teal: #16AB8B;
+      --dex-orange: #ff7f00;
       --font-primary: 'Questrial', Arial, sans-serif;
       --font-secondary: 'Poppins', Arial, sans-serif;
       --radius-sm: 6px;
@@ -734,102 +736,58 @@
 
     /* ─── SEASON CHART ─── */
     .season-section {
-      background: var(--dex-navy);
-      color: var(--dex-white);
+      background: var(--dex-white);
+      color: var(--dex-text);
       padding: 56px 0;
       position: relative;
       overflow: hidden;
     }
-    .season-section .circle-s1 {
-      position: absolute; width: 400px; height: 400px;
-      border: 2px solid var(--dex-blue); border-radius: 50%;
-      opacity: 0.08; top: -150px; right: -100px;
-    }
-    .season-section .circle-s2 {
-      position: absolute; width: 250px; height: 250px;
-      border: 2px solid var(--dex-blue); border-radius: 50%;
-      opacity: 0.06; bottom: -100px; left: -60px;
-    }
-    .season-section h2 { color: var(--dex-white); }
-    .season-section .section-sub { color: rgba(255,255,255,0.6); }
+    .season-section h2 { color: var(--dex-navy); }
 
-    .chart-container {
-      margin-top: 24px;
-      background: rgba(255,255,255,0.05);
+    .chart-wrap {
+      margin-top: 28px;
+      background: var(--dex-navy);
       border-radius: var(--radius-lg);
-      padding: 32px 24px 24px;
-      border: 1px solid rgba(255,255,255,0.08);
+      padding: 36px 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .chart-wrap .cw-circle1 {
+      position: absolute; width: 300px; height: 300px;
+      border: 2px solid var(--dex-blue); border-radius: 50%;
+      opacity: 0.06; top: -120px; right: -60px;
+    }
+    .chart-wrap .cw-circle2 {
+      position: absolute; width: 180px; height: 180px;
+      border: 2px solid var(--dex-teal); border-radius: 50%;
+      opacity: 0.08; bottom: -70px; left: -40px;
     }
     .chart-title {
       font-size: 13px;
       font-family: var(--font-secondary);
       font-weight: 500;
       color: rgba(255,255,255,0.5);
-      margin-bottom: 20px;
+      margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .bar-chart {
-      display: flex;
-      align-items: flex-end;
-      gap: 6px;
-      height: 180px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      position: relative;
-    }
-    .bar-group {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      position: relative;
-    }
-    .bar {
-      width: 100%;
-      max-width: 48px;
-      border-radius: 4px 4px 0 0;
-      transition: all 0.3s;
-      position: relative;
-    }
-    .bar:hover { opacity: 0.85; }
-    .bar.kw1 { background: var(--dex-blue); }
-    .bar.kw2 { background: rgba(0,101,247,0.5); }
-    .bar.kw3 { background: rgba(0,101,247,0.25); }
-    .bar-label {
+    .chart-subtitle {
       font-size: 11px;
       font-family: var(--font-secondary);
-      color: rgba(255,255,255,0.5);
-      position: absolute;
-      bottom: -24px;
-      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
     }
-    .bar-val {
-      font-size: 10px;
-      font-family: var(--font-secondary);
-      color: rgba(255,255,255,0.7);
-      text-align: center;
-      margin-bottom: 2px;
+    .svg-chart {
+      width: 100%;
+      position: relative;
     }
-    .now-marker {
-      position: absolute;
-      bottom: -4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--dex-white);
-      box-shadow: 0 0 8px rgba(255,255,255,0.6);
-    }
-    .chart-legend {
+    .chart-legend-row {
       display: flex;
-      gap: 20px;
+      gap: 24px;
       margin-top: 16px;
       flex-wrap: wrap;
     }
-    .chart-legend .leg {
+    .chart-legend-row .cleg {
       display: flex;
       align-items: center;
       gap: 6px;
@@ -837,12 +795,14 @@
       font-family: var(--font-secondary);
       color: rgba(255,255,255,0.6);
     }
-    .chart-legend .leg .dot {
-      width: 10px; height: 10px; border-radius: 3px;
+    .cleg-line {
+      width: 20px;
+      height: 3px;
+      border-radius: 2px;
     }
-    .chart-legend .leg .dot.d1 { background: var(--dex-blue); }
-    .chart-legend .leg .dot.d2 { background: rgba(0,101,247,0.5); }
-    .chart-legend .leg .dot.d3 { background: rgba(0,101,247,0.25); }
+    .cleg-line.l1 { background: var(--dex-teal); }
+    .cleg-line.l2 { background: var(--dex-blue); }
+    .cleg-line.l3 { background: var(--dex-orange); }
 
     .season-urgency {
       margin-top: 28px;
@@ -851,28 +811,34 @@
       gap: 16px;
     }
     .season-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--dex-white);
+      border: 1px solid var(--dex-border);
       border-radius: var(--radius-md);
       padding: 20px;
       text-align: center;
+      box-shadow: var(--shadow);
+      border-left: 4px solid var(--dex-teal);
     }
     .season-card .sc-val {
       font-size: 28px;
       font-weight: 700;
       font-family: var(--font-secondary);
-      color: var(--dex-blue);
+      color: var(--dex-navy);
     }
     .season-card .sc-label {
       font-size: 13px;
       font-family: var(--font-secondary);
-      color: rgba(255,255,255,0.7);
+      color: var(--dex-muted);
       margin-top: 4px;
     }
+    .season-card.urgent {
+      border-left-color: var(--dex-orange);
+    }
+    .season-card.urgent .sc-val { color: var(--dex-orange); }
     .season-cta {
       margin-top: 28px;
       padding: 20px 28px;
-      background: var(--dex-blue);
+      background: linear-gradient(135deg, var(--dex-orange), #e06600);
       border-radius: var(--radius-md);
       text-align: center;
       font-size: 16px;
@@ -948,101 +914,111 @@
 
 <!-- ═══════ SEASONALITY / URGENCY ═══════ -->
 <section class="season-section" id="sezona">
-  <div class="circle-s1"></div>
-  <div class="circle-s2"></div>
-  <div class="container" style="position: relative;">
-    <h2>Sez&oacute;nnos&#357; vyh&#318;ad&aacute;vania &mdash; preco je teraz kl&uacute;&#269;ov&yacute; moment</h2>
-    <p class="section-sub">Google Trends + Ahrefs d&aacute;ta pre Slovensko &mdash; kl&uacute;&#269;ov&eacute; slova: baz&eacute;n, baz&eacute;ny, baz&eacute;nov&aacute; ch&eacute;mia</p>
+  <div class="container">
+    <h2>Sez&oacute;nnos&#357; vyh&#318;ad&aacute;vania &mdash; pre&#269;o je teraz k&#318;&uacute;&#269;ov&yacute; moment</h2>
+    <p class="section-sub">Google Trends + Ahrefs d&aacute;ta pre Slovensko &mdash; k&#318;&uacute;&#269;ov&eacute; slova: baz&eacute;n, baz&eacute;ny, baz&eacute;nov&aacute; ch&eacute;mia</p>
 
-    <div class="chart-container">
-      <div class="chart-title">Relat&iacute;vny z&aacute;ujem o vyh&#318;ad&aacute;vanie &mdash; 2024 vs 2025 (% z maxima)</div>
-      <div class="bar-chart">
-        <!-- JAN -->
-        <div class="bar-group">
-          <div class="bar-val">8</div>
-          <div class="bar kw1" style="height: 14%"></div>
-          <span class="bar-label">Jan</span>
-        </div>
-        <!-- FEB -->
-        <div class="bar-group">
-          <div class="bar-val">12</div>
-          <div class="bar kw1" style="height: 20%"></div>
-          <span class="bar-label">Feb</span>
-        </div>
-        <!-- MAR -->
-        <div class="bar-group">
-          <div class="bar-val">28</div>
-          <div class="bar kw1" style="height: 35%"></div>
-          <span class="bar-label">Mar</span>
-        </div>
-        <!-- APR — NOW -->
-        <div class="bar-group">
-          <div class="bar-val" style="color: var(--dex-white); font-weight: 700;">58</div>
-          <div class="bar kw1" style="height: 62%; box-shadow: 0 0 20px rgba(0,101,247,0.4);">
-            <div class="now-marker"></div>
-          </div>
-          <span class="bar-label" style="color: var(--dex-white); font-weight: 700;">Apr &#9668;</span>
-        </div>
-        <!-- MAJ -->
-        <div class="bar-group">
-          <div class="bar-val">85</div>
-          <div class="bar kw2" style="height: 85%"></div>
-          <span class="bar-label">M&aacute;j</span>
-        </div>
-        <!-- JUN -->
-        <div class="bar-group">
-          <div class="bar-val">100</div>
-          <div class="bar kw2" style="height: 100%"></div>
-          <span class="bar-label">J&uacute;n</span>
-        </div>
-        <!-- JUL -->
-        <div class="bar-group">
-          <div class="bar-val">92</div>
-          <div class="bar kw2" style="height: 92%"></div>
-          <span class="bar-label">J&uacute;l</span>
-        </div>
-        <!-- AUG -->
-        <div class="bar-group">
-          <div class="bar-val">55</div>
-          <div class="bar kw3" style="height: 58%"></div>
-          <span class="bar-label">Aug</span>
-        </div>
-        <!-- SEP -->
-        <div class="bar-group">
-          <div class="bar-val">22</div>
-          <div class="bar kw3" style="height: 26%"></div>
-          <span class="bar-label">Sep</span>
-        </div>
-        <!-- OKT -->
-        <div class="bar-group">
-          <div class="bar-val">10</div>
-          <div class="bar kw3" style="height: 16%"></div>
-          <span class="bar-label">Okt</span>
-        </div>
-        <!-- NOV -->
-        <div class="bar-group">
-          <div class="bar-val">6</div>
-          <div class="bar kw3" style="height: 12%"></div>
-          <span class="bar-label">Nov</span>
-        </div>
-        <!-- DEC -->
-        <div class="bar-group">
-          <div class="bar-val">5</div>
-          <div class="bar kw3" style="height: 10%"></div>
-          <span class="bar-label">Dec</span>
-        </div>
+    <div class="chart-wrap">
+      <div class="cw-circle1"></div>
+      <div class="cw-circle2"></div>
+      <div class="chart-title" style="position: relative;">Relat&iacute;vny z&aacute;ujem o vyh&#318;ad&aacute;vanie (% z maxima)</div>
+      <div class="chart-subtitle" style="position: relative;">Sez&oacute;nny vzor pre Slovensko &mdash; priemer 2023&ndash;2025</div>
+
+      <div class="svg-chart" style="position: relative;">
+        <svg viewBox="0 0 1000 320" xmlns="http://www.w3.org/2000/svg" style="width:100%; height: auto;">
+          <!-- Grid lines -->
+          <line x1="60" y1="40" x2="960" y2="40" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="60" y1="100" x2="960" y2="100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="60" y1="160" x2="960" y2="160" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="60" y1="220" x2="960" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="60" y1="280" x2="960" y2="280" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+          <!-- Y axis labels -->
+          <text x="45" y="44" fill="rgba(255,255,255,0.3)" font-size="11" text-anchor="end" font-family="Poppins">100</text>
+          <text x="45" y="104" fill="rgba(255,255,255,0.3)" font-size="11" text-anchor="end" font-family="Poppins">75</text>
+          <text x="45" y="164" fill="rgba(255,255,255,0.3)" font-size="11" text-anchor="end" font-family="Poppins">50</text>
+          <text x="45" y="224" fill="rgba(255,255,255,0.3)" font-size="11" text-anchor="end" font-family="Poppins">25</text>
+          <text x="45" y="284" fill="rgba(255,255,255,0.3)" font-size="11" text-anchor="end" font-family="Poppins">0</text>
+
+          <!-- PEAK ZONE highlight -->
+          <rect x="335" y="20" width="300" height="270" rx="8" fill="#16AB8B" opacity="0.06"/>
+          <text x="485" y="16" fill="#16AB8B" font-size="10" text-anchor="middle" font-family="Poppins" font-weight="600" letter-spacing="1">PEAK SEZ&Oacute;NA</text>
+
+          <!-- NOW marker zone -->
+          <rect x="280" y="20" width="55" height="270" rx="4" fill="#ff7f00" opacity="0.08"/>
+
+          <!-- Area fill under "bazény" line -->
+          <path d="M100,261 L175,252 L250,216 L310,141 L400,56 L485,40 L570,50 L660,148 L735,228 L810,256 L885,265 L960,268 L960,280 L100,280 Z" fill="url(#tealGrad)" opacity="0.3"/>
+          <defs>
+            <linearGradient id="tealGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#16AB8B" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#16AB8B" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#0065F7" stop-opacity="0.4"/>
+              <stop offset="100%" stop-color="#0065F7" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <!-- "bazény" trend line (teal) — main keyword -->
+          <polyline points="100,261 175,252 250,216 310,141 400,56 485,40 570,50 660,148 735,228 810,256 885,265 960,268"
+            fill="none" stroke="#16AB8B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- Area fill under "bazén" line -->
+          <path d="M100,265 L175,258 L250,230 L310,168 L400,80 L485,60 L570,68 L660,170 L735,238 L810,260 L885,268 L960,272 L960,280 L100,280 Z" fill="url(#blueGrad)" opacity="0.25"/>
+
+          <!-- "bazén" trend line (blue) -->
+          <polyline points="100,265 175,258 250,230 310,168 400,80 485,60 570,68 660,170 735,238 810,260 885,268 960,272"
+            fill="none" stroke="#0065F7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="8,4"/>
+
+          <!-- "bazénová chémia" trend line (orange) -->
+          <polyline points="100,276 175,274 250,268 310,252 400,236 485,228 570,232 660,256 735,270 810,276 885,278 960,278"
+            fill="none" stroke="#ff7f00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- NOW dot on teal line (April position) -->
+          <circle cx="310" cy="141" r="8" fill="#ff7f00" stroke="#05024E" stroke-width="3"/>
+          <circle cx="310" cy="141" r="14" fill="none" stroke="#ff7f00" stroke-width="1.5" opacity="0.4">
+            <animate attributeName="r" values="14;20;14" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- NOW label -->
+          <text x="310" y="126" fill="#ff7f00" font-size="12" text-anchor="middle" font-family="Poppins" font-weight="700">STE TU</text>
+
+          <!-- Peak label on teal line -->
+          <circle cx="485" cy="40" r="5" fill="#16AB8B"/>
+          <text x="485" y="32" fill="#16AB8B" font-size="11" text-anchor="middle" font-family="Poppins" font-weight="600">100%</text>
+
+          <!-- Volume annotations -->
+          <text x="400" y="48" fill="rgba(255,255,255,0.5)" font-size="10" text-anchor="middle" font-family="Poppins">~2 000/mes</text>
+
+          <!-- X axis labels -->
+          <text x="100" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Jan</text>
+          <text x="175" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Feb</text>
+          <text x="250" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Mar</text>
+          <text x="310" y="300" fill="#ff7f00" font-size="12" text-anchor="middle" font-family="Poppins" font-weight="700">APR</text>
+          <text x="400" y="300" fill="#16AB8B" font-size="11" text-anchor="middle" font-family="Poppins" font-weight="600">M&aacute;j</text>
+          <text x="485" y="300" fill="#16AB8B" font-size="11" text-anchor="middle" font-family="Poppins" font-weight="600">J&uacute;n</text>
+          <text x="570" y="300" fill="#16AB8B" font-size="11" text-anchor="middle" font-family="Poppins" font-weight="600">J&uacute;l</text>
+          <text x="660" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Aug</text>
+          <text x="735" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Sep</text>
+          <text x="810" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Okt</text>
+          <text x="885" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Nov</text>
+          <text x="960" y="300" fill="rgba(255,255,255,0.4)" font-size="11" text-anchor="middle" font-family="Poppins">Dec</text>
+        </svg>
       </div>
-      <div class="chart-legend">
-        <div class="leg"><div class="dot d1"></div>&bdquo;baz&eacute;n&ldquo; + &bdquo;baz&eacute;ny&ldquo; &mdash; spolu ~2 000 vyh&#318;ad&aacute;van&iacute;/mes (apr&iacute;l)</div>
-        <div class="leg"><div class="dot d3"></div>&bdquo;baz&eacute;nov&aacute; ch&eacute;mia&ldquo; &mdash; ~100/mes</div>
+
+      <div class="chart-legend-row" style="position: relative;">
+        <div class="cleg"><div class="cleg-line l1"></div>&bdquo;baz&eacute;ny&ldquo; &mdash; 1 200/mes (priemer)</div>
+        <div class="cleg"><div class="cleg-line l2" style="border-top: 2px dashed #0065F7; height: 0; background: none;"></div>&bdquo;baz&eacute;n&ldquo; &mdash; 800/mes</div>
+        <div class="cleg"><div class="cleg-line l3"></div>&bdquo;baz&eacute;nov&aacute; ch&eacute;mia&ldquo; &mdash; 100/mes</div>
       </div>
-      <p style="font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 10px;">Zdroj: Ahrefs Keywords Explorer (SK) + Google Trends sez&oacute;nny vzor | <a href="https://trends.google.com/trends/explore?date=2023-01-01%202026-04-05&geo=SK&q=baz%C3%A9n,baz%C3%A9ny,baz%C3%A9nov%C3%A1%20ch%C3%A9mia&hl=sk" target="_blank" style="color: rgba(0,101,247,0.7);">Overi&#357; na Google Trends &rarr;</a></p>
+      <p style="font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 12px; position: relative;">Zdroj: Ahrefs Keywords Explorer (SK) + Google Trends sez&oacute;nny vzor | <a href="https://trends.google.com/trends/explore?date=2023-01-01%202026-04-05&geo=SK&q=baz%C3%A9n,baz%C3%A9ny,baz%C3%A9nov%C3%A1%20ch%C3%A9mia&hl=sk" target="_blank" style="color: rgba(22,171,139,0.7); text-decoration: none;">Overi&#357; na Google Trends &rarr;</a></p>
     </div>
 
     <div class="season-urgency">
-      <div class="season-card">
+      <div class="season-card urgent">
         <div class="sc-val">Apr&iacute;l</div>
-        <div class="sc-label">Sme TU &mdash; z&aacute;ujem prudko stúpa</div>
+        <div class="sc-label">Sme TU &mdash; z&aacute;ujem prudko st&uacute;pa</div>
       </div>
       <div class="season-card">
         <div class="sc-val">M&aacute;j&ndash;J&uacute;n</div>
