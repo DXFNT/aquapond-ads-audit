@@ -69,6 +69,35 @@
     }
     .nav-links a:hover { color: var(--dex-blue); }
 
+    /* ─── HAMBURGER ─── */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1000;
+      position: relative;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--dex-navy);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
     /* ─── HERO ─── */
     .hero {
       background: var(--dex-navy);
@@ -1142,13 +1171,45 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        background: var(--dex-white);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        z-index: 999;
+        padding: 80px 40px 40px;
+      }
+      .nav-links.open {
+        display: flex !important;
+      }
+      .nav-links li {
+        width: 100%;
+        text-align: center;
+        border-bottom: 1px solid var(--dex-border);
+      }
+      .nav-links li:last-child { border-bottom: none; }
+      .nav-links a {
+        display: block;
+        padding: 16px 0;
+        font-size: 16px;
+        color: var(--dex-navy) !important;
+      }
+      .nav-links a:hover { color: var(--dex-blue) !important; }
       .hero h1 { font-size: 30px; }
       .hero { padding: 48px 24px 64px; }
       .hero-stats { gap: 24px; }
       .ads-grid { grid-template-columns: 1fr; }
       .summary-grid { grid-template-columns: 1fr 1fr; }
       .summary-box { padding: 32px 24px; }
-      .nav-links { display: none; }
       .metrics-grid { grid-template-columns: 1fr 1fr; }
       .pricing-cards { grid-template-columns: 1fr; }
     }
@@ -1165,15 +1226,18 @@
 <nav class="nav">
   <div class="container">
     <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity" class="nav-logo">
-    <ul class="nav-links">
-      <li><a href="#meta">Meta Ads</a></li>
-      <li><a href="#google">Google Ads</a></li>
-      <li><a href="#findings">Zistenia</a></li>
-      <li><a href="#recs">Odpor&uacute;&#269;ania</a></li>
-      <li><a href="#product-gap">Produkty</a></li>
-      <li><a href="#bonus">Bonus insights</a></li>
-      <li><a href="#konkurencia">Konkurencia</a></li>
-      <li><a href="#pricing" style="color: var(--dex-blue); font-weight: 600;">Cenov&aacute; ponuka</a></li>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#meta" onclick="closeMenu()">Meta Ads</a></li>
+      <li><a href="#google" onclick="closeMenu()">Google Ads</a></li>
+      <li><a href="#findings" onclick="closeMenu()">Zistenia</a></li>
+      <li><a href="#recs" onclick="closeMenu()">Odpor&uacute;&#269;ania</a></li>
+      <li><a href="#product-gap" onclick="closeMenu()">Produkty</a></li>
+      <li><a href="#bonus" onclick="closeMenu()">Bonus insights</a></li>
+      <li><a href="#konkurencia" onclick="closeMenu()">Konkurencia</a></li>
+      <li><a href="#pricing" onclick="closeMenu()" style="color: var(--dex-blue); font-weight: 600;">Cenov&aacute; ponuka</a></li>
     </ul>
   </div>
 </nav>
@@ -2703,6 +2767,20 @@
 </div>
 
 <script>
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+  document.querySelector('.hamburger').classList.toggle('active');
+  document.body.style.overflow = document.getElementById('navLinks').classList.contains('open') ? 'hidden' : '';
+}
+function closeMenu() {
+  document.getElementById('navLinks').classList.remove('open');
+  document.querySelector('.hamburger').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('#navLinks a').forEach(function(a) {
+  a.addEventListener('click', closeMenu);
+});
+
 function flipCard(id) {
   document.getElementById(id).classList.toggle('flipped');
 }
