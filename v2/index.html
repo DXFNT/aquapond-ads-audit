@@ -1212,6 +1212,7 @@
       .summary-box { padding: 32px 24px; }
       .metrics-grid { grid-template-columns: 1fr 1fr; }
       .pricing-cards { grid-template-columns: 1fr; }
+      .wasted-spend-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
     }
   </style>
 </head>
@@ -2539,20 +2540,20 @@
 
     <!-- Context: wasted spend framing -->
     <div style="max-width: 900px; margin: 0 auto 40px; padding: 28px 32px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); position: relative;">
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; text-align: center;">
+      <div class="wasted-spend-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; text-align: center;">
         <div>
           <div style="font-size: 13px; font-family: var(--font-secondary); color: rgba(255,255,255,0.4); margin-bottom: 4px;">V&aacute;&scaron; mesa&#269;n&yacute; ad spend</div>
-          <div style="font-size: 32px; font-weight: 700; font-family: var(--font-secondary); color: var(--dex-white);">5 000&euro;</div>
+          <div style="font-size: 32px; font-weight: 700; font-family: var(--font-secondary); color: var(--dex-white);">5&nbsp;000&euro;</div>
           <div style="font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">ka&#382;d&yacute; mesiac</div>
         </div>
         <div>
           <div style="font-size: 13px; font-family: var(--font-secondary); color: rgba(255,255,255,0.4); margin-bottom: 4px;">Potenci&aacute;lny wasted spend</div>
-          <div style="font-size: 32px; font-weight: 700; font-family: var(--font-secondary); color: var(--dex-orange);">a&zcaron; 20%</div>
-          <div style="font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">= a&zcaron; 1 000&euro;/mes na neefekt&iacute;vnych kampaniach</div>
+          <div style="font-size: 32px; font-weight: 700; font-family: var(--font-secondary); color: var(--dex-orange);">a&zcaron;&nbsp;20%</div>
+          <div style="font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">= a&zcaron; 1&nbsp;000&euro;/mes na neefekt&iacute;vnych kampaniach</div>
         </div>
         <div>
           <div style="font-size: 13px; font-family: var(--font-secondary); color: rgba(255,255,255,0.4); margin-bottom: 4px;">Setup sa v&aacute;m vr&aacute;ti za</div>
-          <div style="font-size: 32px; font-weight: 700; font-family: var(--font-secondary); color: var(--dex-teal);">&lt; 2 mes.</div>
+          <div style="font-size: 32px; font-weight: 700; font-family: var(--font-secondary); color: var(--dex-teal);">&lt;&nbsp;2&nbsp;mes.</div>
           <div style="font-size: 12px; font-family: var(--font-secondary); color: rgba(255,255,255,0.35);">len na &uacute;spore wasted spendu</div>
         </div>
       </div>
