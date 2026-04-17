@@ -69,6 +69,12 @@
     }
     .nav-links a:hover { color: var(--dex-blue); }
 
+    .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1000; position: relative; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--dex-navy); margin: 5px 0; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     /* ─── HERO ─── */
     .hero {
       background: var(--dex-navy);
@@ -860,7 +866,18 @@
       .ads-grid { grid-template-columns: 1fr; }
       .summary-grid { grid-template-columns: 1fr 1fr; }
       .summary-box { padding: 32px 24px; }
-      .nav-links { display: none; }
+      .hamburger { display: block; }
+      .nav-links {
+        display: none;
+        position: fixed; top: 0; left: 0;
+        width: 100%; height: 100vh; height: 100dvh;
+        background: var(--dex-white);
+        flex-direction: column; align-items: center; justify-content: center;
+        gap: 0; z-index: 999; padding: 80px 40px 40px;
+      }
+      .nav-links.open { display: flex !important; }
+      .nav-links li { width: 100%; text-align: center; border-bottom: 1px solid var(--dex-border); }
+      .nav-links a { display: block; padding: 16px 0; font-size: 16px; color: var(--dex-navy) !important; }
       .metrics-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
@@ -875,23 +892,23 @@
 <!-- NAV -->
 <nav class="nav">
   <div class="container">
-    <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity" class="nav-logo">
-    <ul class="nav-links">
-      <li><a href="#meta">Meta Ads</a></li>
-      <li><a href="#google">Google Ads</a></li>
-      <li><a href="#findings">Zistenia</a></li>
-      <li><a href="#recs">Odpor&uacute;&#269;ania</a></li>
-      <li><a href="#product-gap">Produkty</a></li>
-      <li><a href="#heureka">Heureka</a></li>
-      <li><a href="#pagespeed">PageSpeed</a></li>
-      <li><a href="#gmb">GMB</a></li>
-      <li><a href="#konkurencia">Konkurencia</a></li>
+    <a href="#top"><img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity" class="nav-logo"></a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#meta" onclick="closeMenu()">Meta Ads</a></li>
+      <li><a href="#google" onclick="closeMenu()">Google Ads</a></li>
+      <li><a href="#findings" onclick="closeMenu()">Zistenia</a></li>
+      <li><a href="#recs" onclick="closeMenu()">Odpor&uacute;&#269;ania</a></li>
+      <li><a href="#product-gap" onclick="closeMenu()">Produkty</a></li>
+      <li><a href="#heureka" onclick="closeMenu()">Social Proof</a></li>
+      <li><a href="#pagespeed" onclick="closeMenu()">PageSpeed</a></li>
+      <li><a href="#konkurencia" onclick="closeMenu()">Konkurencia</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- HERO -->
-<header class="hero">
+<header class="hero" id="top">
   <div class="circle-1"></div>
   <div class="circle-2"></div>
   <div class="circle-3"></div>
@@ -2096,8 +2113,26 @@
   <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Dark-Landscape@2x.png" alt="Dexfinity" class="footer-logo">
   <p>External Ads Audit &mdash; Aquapond.sk &mdash; Pripraven&eacute; 4. apr&iacute;la 2026</p>
   <p>Na z&aacute;klade verejne dostupn&yacute;ch d&aacute;t z Meta Ad Library a Google Ads Transparency Center.</p>
+  <p style="margin-top: 12px;">Ot&aacute;zky? Nap&iacute;&scaron;te na <a href="mailto:hello@dexfinity.com" style="color: var(--dex-blue); text-decoration: none;">hello@dexfinity.com</a> alebo zavolajte <a href="tel:+421918435105" style="color: var(--dex-blue); text-decoration: none;">+421 918 435 105</a></p>
   <div class="go-beyond">Go Beyond</div>
 </footer>
+
+<script>
+function toggleMenu() {
+  var nav = document.getElementById('navLinks');
+  var btn = document.querySelector('.hamburger');
+  nav.classList.toggle('open');
+  btn.classList.toggle('active');
+  document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+}
+function closeMenu() {
+  var nav = document.getElementById('navLinks');
+  var btn = document.querySelector('.hamburger');
+  nav.classList.remove('open');
+  btn.classList.remove('active');
+  document.body.style.overflow = '';
+}
+</script>
 
 </body>
 </html>
