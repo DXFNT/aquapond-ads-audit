@@ -95,7 +95,7 @@ h1,h2,h3 { font-family:var(--font-primary); }
   <div class="container">
     <span class="hero-badge">Dex Grader · Aquapond · 6 trhov</span>
     <h1>Multi-market Google Ads health report</h1>
-    <p class="lead">13-signal analýza cez Dexfinity Dex Grader framework — váha 10 dimenzií, 0–100 score, A+/A/B/C/D/F grade. Dáta za posledných 30 dní.</p>
+    <p class="lead">Za pár minút vidíte, kde každý z 6 trhov Aquapondu zarába, a kde stráca peniaze. Skóre 0–100 a grade A+/A/B/C/D/F pre každý účet, dáta za posledných 30 dní.</p>
     <div class="hero-kpis">
       <div class="hero-kpi"><div class="hero-kpi-label">6-trh spend 30d</div><div class="hero-kpi-value">5,406 €</div></div>
       <div class="hero-kpi"><div class="hero-kpi-label">6-trh value 30d</div><div class="hero-kpi-value">80,351 €</div></div>
@@ -206,18 +206,18 @@ h1,h2,h3 { font-family:var(--font-primary); }
 <section class="methodology">
   <div class="container">
     <h2 class="grid-title">Ako to meriame</h2>
-    <p class="grid-sub">Dex Grader kombinuje 9 Google Ads script simulácií + 4 proprietárne Dexfinity signály. Váhy sú kalibrované na eshopový kontext.</p>
+    <p class="grid-sub">Každá oblasť meria jedno konkrétne miesto, kde sa dá zarobiť viac alebo stratiť menej. Váhy sú kalibrované na eshop — priamy zisk (ROAS, wasted spend) má väčší dopad než napr. šírka kanálov.</p>
     <div class="method-grid">
-      <div class="method-card"><h4>ROAS Performance</h4><p>Account ROAS vs. 3× cieľ · váha 20</p></div>
-      <div class="method-card"><h4>Wasted Spend</h4><p>% budgetu v losers/exclude kandidátoch · váha 15</p></div>
-      <div class="method-card"><h4>Schedule Efficiency</h4><p>% hodín pod target ROAS · váha 12</p></div>
-      <div class="method-card"><h4>Device Bid Optimization</h4><p>Mobile/desktop/tablet bid adjusty · váha 10</p></div>
-      <div class="method-card"><h4>Budget Pacing</h4><p>DoW-weighted MTD variance · váha 9</p></div>
-      <div class="method-card"><h4>Anomaly Stability</h4><p>Dni s metric anomáliami · váha 8</p></div>
-      <div class="method-card"><h4>Search Term Quality</h4><p>Winners-to-losers ratio · váha 8</p></div>
-      <div class="method-card"><h4>Creative Balance</h4><p>Slabé angles >10% spend flagged · váha 8</p></div>
-      <div class="method-card"><h4>Cannibalization Hygiene</h4><p>Duplicate KW + PMax brand · váha 7</p></div>
-      <div class="method-card"><h4>Channel Diversity</h4><p>Počet kanálov so spendom · váha 3</p></div>
+      <div class="method-card"><h4>ROAS Performance · w. 20</h4><p>Pomer návratnosti vs. cieľ 3×. Najvyššia váha — toto je priamy ukazovateľ, či Ads robia zisk.</p></div>
+      <div class="method-card"><h4>Wasted Spend · w. 15</h4><p>Eur, ktoré mesačne zbytočne utratíme na search termoch, lokáciách a placementoch s nulovou návratnosťou.</p></div>
+      <div class="method-card"><h4>Schedule Efficiency · w. 12</h4><p>Hodiny v dni, keď účet paľuje budget bez výkonu. Štandardne 10–25 % hodín je pod pause thresholdom.</p></div>
+      <div class="method-card"><h4>Device Bid Optimization · w. 10</h4><p>Či mobile/desktop/tablet majú správne bid adjusty. Príležitosť zvýšiť zisk bez zvýšenia budgetu.</p></div>
+      <div class="method-card"><h4>Budget Pacing Discipline · w. 9</h4><p>Či MTD spend sedí s očakávaním (DoW-weighted). Overpacing = míňanie dopredu, underpacing = strata objemu.</p></div>
+      <div class="method-card"><h4>Anomaly Stability · w. 8</h4><p>Koľko dní za 30 účet skokovo vybočil (cost/ROAS). Stabilný účet má čistý trend, nie divoký zig-zag.</p></div>
+      <div class="method-card"><h4>Search Term Quality · w. 8</h4><p>Pomer "winners" (high-ROAS termy) k "losers". Ak je viac losers, účet má priestor na kľúčovú čistku.</p></div>
+      <div class="method-card"><h4>Creative Balance · w. 8</h4><p>Či všetky creative angles (Brand, Sale, Category, Video, Remarketing...) zarábajú. Slabé angles nad 10 % spend = červený flag.</p></div>
+      <div class="method-card"><h4>Cannibalization Hygiene · w. 7</h4><p>Duplicity keywords v rôznych ad groupoch + PMax prepisovanie brand search. Zbytočne si konkurujeme sami sebe.</p></div>
+      <div class="method-card"><h4>Channel Diversity · w. 3</h4><p>Koľko kanálov zarába. Nízka váha — diverzifikácia je plus, ale nie je to zdroj zisku ako ROAS.</p></div>
     </div>
   </div>
 </section>
