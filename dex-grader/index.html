@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aquapond — Dex Grader Multi-Market | Dexfinity</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --dex-blue:#0065F7; --dex-navy:#05024E; --dex-white:#fff;
+  --dex-light-bg:#F4F6FC; --dex-blue-light:#E8F0FE;
+  --dex-blue-10:rgba(0,101,247,.1); --dex-blue-20:rgba(0,101,247,.2);
+  --dex-text:#1A1A2E; --dex-muted:#6B7280; --dex-border:#E5E7EB;
+  --dex-teal:#16AB8B;
+  --font-primary:'Questrial',Arial,sans-serif;
+  --font-secondary:'Poppins',Arial,sans-serif;
+}
+body { font-family:var(--font-secondary); color:var(--dex-text); background:var(--dex-light-bg); line-height:1.6; }
+h1,h2,h3 { font-family:var(--font-primary); }
+.container { max-width:1200px; margin:0 auto; padding:0 20px; }
+.nav { position:sticky; top:0; z-index:100; background:rgba(255,255,255,.96); backdrop-filter:blur(12px); border-bottom:1px solid var(--dex-border); padding:10px 0; }
+.nav .container { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+.nav-logo { height:48px; }
+.flag-nav { display:flex; gap:4px; flex-wrap:wrap; align-items:center; }
+.flag-link {
+  display:flex; align-items:center; gap:6px;
+  padding:6px 10px; border-radius:8px; text-decoration:none;
+  color:var(--dex-muted); font-size:13px; font-weight:500; line-height:1;
+  transition:background .18s,color .18s; border:1px solid transparent;
+}
+.flag-link:hover { background:var(--dex-blue-10); color:var(--dex-navy); }
+.flag-link .flag { font-size:16px; line-height:1; }
+@media (max-width:700px) { .flag-link .mkt { display:none; } .flag-link { padding:6px 8px; } }
+
+.hero { background:linear-gradient(135deg,#05024E 0%,#0A0A6E 60%,#0065F7 100%); color:#fff; padding:80px 0 60px; position:relative; overflow:hidden; }
+.hero-badge { display:inline-block; padding:6px 14px; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); border-radius:100px; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:18px; }
+.hero h1 { font-size:48px; line-height:1.12; margin-bottom:14px; font-weight:700; }
+.hero .lead { font-size:18px; max-width:720px; opacity:.9; }
+.hero-kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-top:30px; max-width:900px; }
+.hero-kpi { padding:14px 18px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:12px; }
+.hero-kpi-label { font-size:11px; opacity:.75; text-transform:uppercase; letter-spacing:.08em; }
+.hero-kpi-value { font-size:26px; font-weight:700; font-family:var(--font-primary); margin-top:4px; }
+
+.grid { padding:60px 0; }
+.grid-title { font-size:28px; margin-bottom:8px; }
+.grid-sub { color:var(--dex-muted); margin-bottom:30px; }
+.grid-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; }
+
+.mkt-card { background:#fff; border:1px solid var(--dex-border); border-radius:16px; padding:24px; text-decoration:none; color:inherit; transition:transform .2s, box-shadow .2s, border-color .2s; display:block; }
+.mkt-card:hover { transform:translateY(-4px); box-shadow:0 12px 40px rgba(5,2,78,.12); border-color:var(--dex-blue); }
+.mkt-head { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.mkt-flag { font-size:32px; }
+.mkt-name { font-weight:700; font-size:18px; flex:1; }
+.mkt-grade { color:#fff; padding:4px 10px; border-radius:999px; font-weight:700; font-size:14px; }
+.mkt-score { font-family:var(--font-primary); font-size:52px; font-weight:700; line-height:1; color:var(--dex-navy); }
+.mkt-score span { font-size:20px; color:var(--dex-muted); font-weight:400; }
+.mkt-desc { color:var(--dex-muted); font-size:14px; margin-bottom:14px; }
+.mkt-kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:14px 0; border-top:1px solid var(--dex-border); border-bottom:1px solid var(--dex-border); margin-bottom:14px; }
+.mkt-kpis > div { font-size:13px; color:var(--dex-text); font-weight:600; display:flex; flex-direction:column; }
+.mkt-kpis > div b { font-size:16px; }
+.mkt-kpis > div span { font-size:11px; color:var(--dex-muted); font-weight:400; margin-top:2px; }
+.mkt-cta { color:var(--dex-blue); font-weight:600; font-size:14px; }
+
+.methodology { background:#fff; border-top:1px solid var(--dex-border); padding:60px 0; }
+.method-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; margin-top:24px; }
+.method-card { padding:18px; background:var(--dex-light-bg); border-radius:12px; border:1px solid var(--dex-border); }
+.method-card h4 { font-family:var(--font-primary); color:var(--dex-navy); font-size:15px; margin-bottom:6px; }
+.method-card p { font-size:13px; color:var(--dex-muted); line-height:1.5; }
+
+footer { background:var(--dex-navy); color:#fff; padding:40px 0; text-align:center; }
+footer img { height:64px; margin-bottom:16px; }
+footer p { opacity:.8; font-size:14px; }
+footer a { color:#fff; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container">
+    <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity" class="nav-logo">
+    <div class="flag-nav">
+      <a href="aquapond_sk.html" class="flag-link"><span class="flag">🇸🇰</span><span class="mkt">Slovensko</span></a><a href="aquapond_hu.html" class="flag-link"><span class="flag">🇭🇺</span><span class="mkt">Maďarsko</span></a><a href="aquapond_cz.html" class="flag-link"><span class="flag">🇨🇿</span><span class="mkt">Česko</span></a><a href="aquapond_de.html" class="flag-link"><span class="flag">🇩🇪</span><span class="mkt">Nemecko</span></a><a href="aquapond_at.html" class="flag-link"><span class="flag">🇦🇹</span><span class="mkt">Rakúsko</span></a><a href="aquapond_pl.html" class="flag-link"><span class="flag">🇵🇱</span><span class="mkt">Poľsko</span></a>
+    </div>
+    <span style="font-size:13px;color:var(--dex-muted);">Prehľad</span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <span class="hero-badge">Dex Grader · Aquapond · 6 trhov</span>
+    <h1>Multi-market Google Ads health report</h1>
+    <p class="lead">13-signal analýza cez Dexfinity Dex Grader framework — váha 10 dimenzií, 0–100 score, A+/A/B/C/D/F grade. Dáta za posledných 30 dní.</p>
+    <div class="hero-kpis">
+      <div class="hero-kpi"><div class="hero-kpi-label">6-trh spend 30d</div><div class="hero-kpi-value">5,406 €</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-label">6-trh value 30d</div><div class="hero-kpi-value">80,351 €</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-label">Blended ROAS</div><div class="hero-kpi-value">14.86×</div></div>
+      <div class="hero-kpi"><div class="hero-kpi-label">Priemerné skóre</div><div class="hero-kpi-value">86/100</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="grid">
+  <div class="container">
+    <h2 class="grid-title">Účty podľa zdravia</h2>
+    <p class="grid-sub">Klikni na trh pre plný Dex Grader report so všetkými 13 signálmi.</p>
+    <div class="grid-row">
+    <a href="aquapond_hu.html" class="mkt-card">
+      <div class="mkt-head">
+        <span class="mkt-flag">🇭🇺</span>
+        <span class="mkt-name">Maďarsko</span>
+        <span class="mkt-grade" style="background:#16AB8B">A+</span>
+      </div>
+      <div class="mkt-score">90<span>/100</span></div>
+      <div class="mkt-desc">Vynikajúce</div>
+      <div class="mkt-kpis">
+        <div><b>199</b> €<span>spend 30d</span></div>
+        <div><b>1,883</b> €<span>value 30d</span></div>
+        <div><b>9.5×</b><span>ROAS</span></div>
+      </div>
+      <div class="mkt-cta">Otvoriť audit →</div>
+    </a>
+    <a href="aquapond_de.html" class="mkt-card">
+      <div class="mkt-head">
+        <span class="mkt-flag">🇩🇪</span>
+        <span class="mkt-name">Nemecko</span>
+        <span class="mkt-grade" style="background:#16AB8B">A</span>
+      </div>
+      <div class="mkt-score">89<span>/100</span></div>
+      <div class="mkt-desc">Veľmi dobré</div>
+      <div class="mkt-kpis">
+        <div><b>858</b> €<span>spend 30d</span></div>
+        <div><b>19,019</b> €<span>value 30d</span></div>
+        <div><b>22.2×</b><span>ROAS</span></div>
+      </div>
+      <div class="mkt-cta">Otvoriť audit →</div>
+    </a>
+    <a href="aquapond_at.html" class="mkt-card">
+      <div class="mkt-head">
+        <span class="mkt-flag">🇦🇹</span>
+        <span class="mkt-name">Rakúsko</span>
+        <span class="mkt-grade" style="background:#16AB8B">A</span>
+      </div>
+      <div class="mkt-score">88<span>/100</span></div>
+      <div class="mkt-desc">Veľmi dobré</div>
+      <div class="mkt-kpis">
+        <div><b>475</b> €<span>spend 30d</span></div>
+        <div><b>15,432</b> €<span>value 30d</span></div>
+        <div><b>32.5×</b><span>ROAS</span></div>
+      </div>
+      <div class="mkt-cta">Otvoriť audit →</div>
+    </a>
+    <a href="aquapond_pl.html" class="mkt-card">
+      <div class="mkt-head">
+        <span class="mkt-flag">🇵🇱</span>
+        <span class="mkt-name">Poľsko</span>
+        <span class="mkt-grade" style="background:#16AB8B">A</span>
+      </div>
+      <div class="mkt-score">87<span>/100</span></div>
+      <div class="mkt-desc">Veľmi dobré</div>
+      <div class="mkt-kpis">
+        <div><b>198</b> €<span>spend 30d</span></div>
+        <div><b>1,341</b> €<span>value 30d</span></div>
+        <div><b>6.8×</b><span>ROAS</span></div>
+      </div>
+      <div class="mkt-cta">Otvoriť audit →</div>
+    </a>
+    <a href="aquapond_cz.html" class="mkt-card">
+      <div class="mkt-head">
+        <span class="mkt-flag">🇨🇿</span>
+        <span class="mkt-name">Česko</span>
+        <span class="mkt-grade" style="background:#16AB8B">A</span>
+      </div>
+      <div class="mkt-score">83<span>/100</span></div>
+      <div class="mkt-desc">Veľmi dobré</div>
+      <div class="mkt-kpis">
+        <div><b>350</b> €<span>spend 30d</span></div>
+        <div><b>6,431</b> €<span>value 30d</span></div>
+        <div><b>18.4×</b><span>ROAS</span></div>
+      </div>
+      <div class="mkt-cta">Otvoriť audit →</div>
+    </a>
+    <a href="aquapond_sk.html" class="mkt-card">
+      <div class="mkt-head">
+        <span class="mkt-flag">🇸🇰</span>
+        <span class="mkt-name">Slovensko</span>
+        <span class="mkt-grade" style="background:#0065F7">B</span>
+      </div>
+      <div class="mkt-score">79<span>/100</span></div>
+      <div class="mkt-desc">Dobré</div>
+      <div class="mkt-kpis">
+        <div><b>3,326</b> €<span>spend 30d</span></div>
+        <div><b>36,245</b> €<span>value 30d</span></div>
+        <div><b>10.9×</b><span>ROAS</span></div>
+      </div>
+      <div class="mkt-cta">Otvoriť audit →</div>
+    </a></div>
+  </div>
+</section>
+
+<section class="methodology">
+  <div class="container">
+    <h2 class="grid-title">Ako to meriame</h2>
+    <p class="grid-sub">Dex Grader kombinuje 9 Google Ads script simulácií + 4 proprietárne Dexfinity signály. Váhy sú kalibrované na eshopový kontext.</p>
+    <div class="method-grid">
+      <div class="method-card"><h4>ROAS Performance</h4><p>Account ROAS vs. 3× cieľ · váha 20</p></div>
+      <div class="method-card"><h4>Wasted Spend</h4><p>% budgetu v losers/exclude kandidátoch · váha 15</p></div>
+      <div class="method-card"><h4>Schedule Efficiency</h4><p>% hodín pod target ROAS · váha 12</p></div>
+      <div class="method-card"><h4>Device Bid Optimization</h4><p>Mobile/desktop/tablet bid adjusty · váha 10</p></div>
+      <div class="method-card"><h4>Budget Pacing</h4><p>DoW-weighted MTD variance · váha 9</p></div>
+      <div class="method-card"><h4>Anomaly Stability</h4><p>Dni s metric anomáliami · váha 8</p></div>
+      <div class="method-card"><h4>Search Term Quality</h4><p>Winners-to-losers ratio · váha 8</p></div>
+      <div class="method-card"><h4>Creative Balance</h4><p>Slabé angles >10% spend flagged · váha 8</p></div>
+      <div class="method-card"><h4>Cannibalization Hygiene</h4><p>Duplicate KW + PMax brand · váha 7</p></div>
+      <div class="method-card"><h4>Channel Diversity</h4><p>Počet kanálov so spendom · váha 3</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity">
+    <p>Dexfinity · <a href="mailto:hello@dexfinity.com">hello@dexfinity.com</a> · +421 918 435 105</p>
+    <p style="margin-top:8px; font-size:12px;">Dex Grader framework · 13 signálov · 10 váž. dimenzií · 0–100 score</p>
+  </div>
+</footer>
+</body>
+</html>

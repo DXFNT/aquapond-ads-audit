@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aquapond SK — Dex Grader | Dexfinity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Questrial&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dex-blue: #0065F7;
+      --dex-navy: #05024E;
+      --dex-white: #ffffff;
+      --dex-light-bg: #F4F6FC;
+      --dex-blue-light: #E8F0FE;
+      --dex-blue-10: rgba(0, 101, 247, 0.1);
+      --dex-blue-20: rgba(0, 101, 247, 0.2);
+      --dex-navy-light: #0A0A6E;
+      --dex-text: #1A1A2E;
+      --dex-muted: #6B7280;
+      --dex-border: #E5E7EB;
+      --dex-teal: #16AB8B;
+      --font-primary: 'Questrial', Arial, sans-serif;
+      --font-secondary: 'Poppins', Arial, sans-serif;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 2px 8px rgba(0, 101, 247, 0.08);
+    }
+
+    body {
+      font-family: var(--font-secondary);
+      color: var(--dex-text);
+      background: var(--dex-white);
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: var(--font-primary); }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--dex-border);
+      padding: 10px 0;
+    }
+    .nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo { height: 48px; }
+    .nav-back {
+      color: var(--dex-muted); text-decoration: none;
+      font-size: 13px; font-weight: 500;
+      display: flex; align-items: center; gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--dex-blue); }
+
+    /* URGENCY */
+    .urgency {
+      background: var(--dex-blue); color: var(--dex-white);
+      text-align: center; padding: 12px 24px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--dex-navy); color: var(--dex-white);
+      padding: 80px 40px 100px; position: relative; overflow: hidden;
+    }
+    .hero .circle-1 { position: absolute; width: 500px; height: 500px; border: 2px solid var(--dex-blue); border-radius: 50%; opacity: 0.12; top: -200px; right: -100px; }
+    .hero .circle-2 { position: absolute; width: 300px; height: 300px; border: 2px solid var(--dex-blue); border-radius: 50%; opacity: 0.08; bottom: -100px; left: -80px; }
+    .hero .circle-3 { position: absolute; width: 180px; height: 180px; background: var(--dex-blue); border-radius: 50%; opacity: 0.06; top: 60px; right: 200px; }
+    .hero-badge {
+      display: inline-block; background: var(--dex-blue-20);
+      border: 1px solid rgba(0,101,247,0.3);
+      border-radius: 50px; padding: 6px 18px;
+      font-size: 12px; font-weight: 500; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 24px;
+      position: relative;
+    }
+    .hero h1 { font-size: 44px; font-weight: 400; margin-bottom: 8px; line-height: 1.15; position: relative; }
+    .hero h1 span { color: var(--dex-blue); }
+    .hero .tagline {
+      font-family: var(--font-secondary); font-size: 14px; font-weight: 300;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--dex-blue); margin-bottom: 16px;
+    }
+    .hero p.sub {
+      font-size: 16px; font-weight: 300; opacity: 0.8;
+      max-width: 620px; margin-bottom: 40px;
+    }
+    .hero-stats { display: flex; gap: 48px; flex-wrap: wrap; position: relative; }
+    .freshness-note {
+      margin-top: 36px; padding: 10px 18px;
+      background: rgba(0,101,247,0.12); border: 1px solid rgba(0,101,247,0.25);
+      border-radius: var(--radius-md); display: inline-flex;
+      align-items: flex-start; gap: 10px;
+      font-size: 12px; color: rgba(255,255,255,0.85);
+      max-width: 720px; position: relative; line-height: 1.5;
+    }
+    .freshness-note .fresh-icon { font-size: 14px; flex-shrink: 0; }
+    .hero-stat { text-align: center; }
+    .hero-stat .num { font-size: 36px; font-weight: 700; display: block; color: var(--dex-white); }
+    .hero-stat .label { font-size: 11px; font-weight: 500; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* LAYOUT */
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 56px 0; }
+    section.alt { background: var(--dex-light-bg); }
+    section h2 { font-size: 28px; font-weight: 400; color: var(--dex-navy); margin-bottom: 6px; }
+    section .section-sub { color: var(--dex-muted); font-size: 14px; margin-bottom: 32px; }
+
+    /* METRIC CARDS */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .metric-card {
+      background: var(--dex-white); border-radius: var(--radius-md);
+      padding: 24px; box-shadow: var(--shadow);
+      border-left: 4px solid var(--dex-blue);
+    }
+    .metric-card h3 {
+      font-size: 12px; font-family: var(--font-secondary);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--dex-muted); margin-bottom: 8px;
+    }
+    .metric-card .value {
+      font-size: 28px; font-weight: 700; color: var(--dex-navy);
+    }
+    .metric-card .desc { font-size: 13px; color: var(--dex-muted); margin-top: 4px; }
+    .metric-card.pain { border-left-color: var(--dex-navy); background: var(--dex-navy); color: var(--dex-white); }
+    .metric-card.pain h3 { color: rgba(255,255,255,0.6); }
+
+    /* CATEGORY HEADERS */
+    .cat-header {
+      font-size: 13px; font-weight: 600; color: var(--dex-navy);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin: 36px 0 16px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--dex-blue); display: inline-block;
+    }
+
+    /* TABLES */
+    .data-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+      background: var(--dex-white); border-radius: var(--radius-md);
+      overflow: hidden; box-shadow: var(--shadow);
+    }
+    .data-table th {
+      background: var(--dex-navy); color: var(--dex-white);
+      padding: 12px 14px; text-align: left;
+      font-weight: 600; font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--dex-border); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover { background: var(--dex-blue-10); }
+
+    /* BADGES */
+    .badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+    }
+    .badge-critical { background: var(--dex-navy); color: var(--dex-white); }
+    .badge-warning { background: var(--dex-blue-10); color: var(--dex-blue); }
+    .badge-info { background: var(--dex-blue-light); color: var(--dex-blue); }
+    .badge-positive { background: var(--dex-teal); color: var(--dex-white); }
+
+    .issue-tag {
+      font-size: 11px; padding: 3px 10px; border-radius: 20px;
+      background: var(--dex-blue-10); color: var(--dex-blue); font-weight: 500;
+    }
+
+    /* FINDINGS */
+    .finding {
+      display: grid; grid-template-columns: 4px 1fr;
+      margin-bottom: 14px; border-radius: var(--radius-md);
+      overflow: hidden; background: var(--dex-white);
+      box-shadow: var(--shadow); border: 1px solid var(--dex-border);
+    }
+    .finding .bar { min-height: 100%; }
+    .finding .bar.high { background: var(--dex-navy); }
+    .finding .bar.med { background: var(--dex-blue); }
+    .finding .bar.low { background: var(--dex-teal); }
+    .finding .content { padding: 18px 22px; }
+    .finding .content h4 {
+      font-size: 15px; font-weight: 600;
+      font-family: var(--font-secondary);
+      margin-bottom: 6px; display: flex;
+      align-items: center; gap: 10px;
+      color: var(--dex-navy);
+    }
+    .finding .content p { font-size: 13px; color: var(--dex-muted); line-height: 1.6; }
+    .finding .content .rec {
+      margin-top: 10px; padding: 10px 14px;
+      background: var(--dex-blue-10); border-radius: var(--radius-sm);
+      font-size: 13px; color: var(--dex-navy);
+      border-left: 3px solid var(--dex-blue);
+    }
+    .finding .content .rec strong { color: var(--dex-blue); }
+
+    /* HEATMAP */
+    .heatmap-wrapper {
+      background: var(--dex-white); border-radius: var(--radius-md);
+      box-shadow: var(--shadow); padding: 16px; overflow-x: auto;
+    }
+    .heatmap-wrapper table { width: 100%; border-collapse: collapse; min-width: 820px; }
+    .heatmap-wrapper td, .heatmap-wrapper th { padding: 4px 2px; }
+
+    /* SUMMARY BOX (savings) */
+    .summary-box {
+      background: var(--dex-navy); color: var(--dex-white);
+      border-radius: var(--radius-lg); padding: 48px;
+      position: relative; overflow: hidden; margin-top: 24px;
+    }
+    .summary-box::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 240px; height: 240px; border-radius: 50%;
+      border: 2px solid var(--dex-blue); opacity: 0.15;
+    }
+    .summary-box .label {
+      font-size: 13px; opacity: 0.6; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-bottom: 10px;
+    }
+    .summary-box .value {
+      font-size: 56px; font-weight: 700; font-family: var(--font-primary);
+      color: var(--dex-blue); line-height: 1;
+    }
+    .summary-box p { font-size: 15px; opacity: 0.8; margin-top: 12px; max-width: 600px; position: relative; }
+    .summary-box .roas-uplift {
+      margin-top: 24px; padding: 16px 20px;
+      background: rgba(0,101,247,0.15); border-radius: var(--radius-md);
+      display: inline-block; font-size: 14px;
+    }
+    .summary-box .roas-uplift strong { color: var(--dex-blue); font-size: 18px; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--dex-navy); color: rgba(255,255,255,0.7);
+      padding: 48px 32px; text-align: center; font-size: 13px;
+      position: relative; overflow: hidden;
+    }
+    .footer .circle-f { position: absolute; border: 1px solid var(--dex-blue); border-radius: 50%; opacity: 0.1; }
+    .footer .f1 { width: 300px; height: 300px; top: -150px; left: -100px; }
+    .footer .f2 { width: 200px; height: 200px; bottom: -100px; right: -50px; }
+    .footer-logo { height: 64px; margin-bottom: 20px; position: relative; }
+    .footer p { position: relative; }
+    .footer .go-beyond {
+      margin-top: 16px; color: var(--dex-blue);
+      font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; font-size: 13px; position: relative;
+    }
+
+    /* METHODOLOGY BAR */
+    .methodology-bar {
+      background: var(--dex-white); padding: 40px 0;
+      border-bottom: 1px solid var(--dex-border);
+    }
+    .methodology-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px; align-items: start;
+    }
+    .method-item { text-align: left; }
+    .method-num {
+      font-size: 40px; font-weight: 700;
+      font-family: var(--font-primary); color: var(--dex-blue);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .method-label {
+      font-size: 13px; font-weight: 600; color: var(--dex-navy);
+      font-family: var(--font-secondary);
+      text-transform: uppercase; letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .method-desc {
+      font-size: 12px; color: var(--dex-muted); line-height: 1.5;
+    }
+
+    /* SCORE SECTION */
+    .score-section {
+      background: var(--dex-navy); color: var(--dex-white);
+      padding: 72px 0; position: relative; overflow: hidden;
+    }
+    .score-section::before {
+      content: ''; position: absolute; top: -180px; left: -120px;
+      width: 480px; height: 480px; border-radius: 50%;
+      border: 2px solid var(--dex-blue); opacity: 0.08;
+    }
+    .score-section::after {
+      content: ''; position: absolute; bottom: -100px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      border: 2px solid var(--dex-blue); opacity: 0.1;
+    }
+    .score-layout {
+      display: grid; grid-template-columns: minmax(280px, 340px) 1fr;
+      gap: 48px; align-items: center; position: relative;
+    }
+    .score-gauge { text-align: center; position: relative; }
+    .score-gauge svg { display: block; margin: 0 auto; }
+    .score-gauge .gauge-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); text-align: center;
+    }
+    .score-gauge .gauge-number {
+      font-size: 72px; font-weight: 700;
+      font-family: var(--font-primary); line-height: 1;
+      color: var(--dex-white);
+    }
+    .score-gauge .gauge-outof {
+      font-size: 14px; opacity: 0.5; letter-spacing: 1.5px;
+      text-transform: uppercase; margin-top: 4px;
+    }
+    .score-gauge .gauge-grade {
+      display: inline-block; margin-top: 16px;
+      background: var(--dex-blue); color: var(--dex-white);
+      padding: 6px 18px; border-radius: 50px;
+      font-size: 13px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .score-intro h2 {
+      font-size: 32px; font-weight: 400; color: var(--dex-white);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .score-intro h2 span { color: var(--dex-blue); }
+    .score-intro .tagline {
+      font-family: var(--font-secondary); font-size: 13px; font-weight: 300;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--dex-blue); margin-bottom: 12px;
+    }
+    .score-intro p {
+      font-size: 15px; opacity: 0.75; line-height: 1.7;
+      max-width: 560px; font-family: var(--font-secondary);
+    }
+
+    .dim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px; margin-top: 48px; position: relative;
+    }
+    .dim-card {
+      background: rgba(255,255,255,0.06); border-radius: var(--radius-md);
+      padding: 18px 20px; border: 1px solid rgba(0,101,247,0.15);
+      backdrop-filter: blur(8px);
+    }
+    .dim-head {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .dim-icon { font-size: 18px; }
+    .dim-name {
+      flex: 1; font-size: 13px; font-weight: 600;
+      color: var(--dex-white); font-family: var(--font-secondary);
+    }
+    .dim-weight {
+      font-size: 10px; color: rgba(255,255,255,0.4);
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .dim-score-row {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .dim-score-num {
+      font-size: 32px; font-weight: 700;
+      font-family: var(--font-primary); color: var(--dex-white); line-height: 1;
+    }
+    .dim-score-num span {
+      font-size: 13px; opacity: 0.4; font-weight: 400; margin-left: 4px;
+    }
+    .dim-verdict {
+      font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--dex-blue);
+    }
+    .dim-bar-bg {
+      height: 6px; background: rgba(255,255,255,0.1);
+      border-radius: 3px; overflow: hidden; margin-bottom: 8px;
+    }
+    .dim-bar-fill {
+      height: 100%; border-radius: 3px; transition: width 0.6s;
+    }
+    .dim-detail {
+      font-size: 11px; color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .score-layout { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .score-intro p { margin: 0 auto; }
+      .score-gauge .gauge-number { font-size: 56px; }
+    }
+
+    /* PACING */
+    .pace-hero {
+      display: grid; grid-template-columns: 1fr 2fr; gap: 32px;
+      background: var(--dex-white); border-radius: var(--radius-md);
+      padding: 32px 36px; box-shadow: var(--shadow);
+      align-items: center; margin-bottom: 32px;
+      border-left: 4px solid var(--dex-blue);
+    }
+    .pace-hero-label {
+      font-size: 11px; color: var(--dex-muted);
+      text-transform: uppercase; letter-spacing: 1.2px; font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .pace-hero-num {
+      font-size: 56px; font-weight: 700;
+      font-family: var(--font-primary); line-height: 1; margin-bottom: 6px;
+    }
+    .pace-hero-status {
+      font-size: 14px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .pace-hero-sub { font-size: 12px; color: var(--dex-muted); }
+
+    .pace-hero-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .pace-stat { text-align: left; }
+    .pace-stat-label {
+      font-size: 11px; color: var(--dex-muted);
+      text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .pace-stat-val {
+      font-size: 24px; font-weight: 700;
+      font-family: var(--font-primary); color: var(--dex-navy); line-height: 1.1;
+    }
+    .pace-stat-sub {
+      font-size: 11px; color: var(--dex-muted); margin-top: 4px;
+    }
+
+    .pace-chart-wrapper {
+      background: var(--dex-white); border-radius: var(--radius-md);
+      padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px;
+    }
+    .pace-chart-bars {
+      display: flex; align-items: flex-end; gap: 3px;
+      height: 180px; padding: 4px 0;
+      border-bottom: 1px solid var(--dex-border);
+    }
+    .pace-col {
+      flex: 1; border-radius: 4px 4px 0 0;
+      position: relative; transition: opacity 0.2s;
+      min-height: 3px;
+    }
+    .pace-col:hover { opacity: 0.75 !important; }
+    .pace-day-num {
+      position: absolute; bottom: -22px; left: 50%;
+      transform: translateX(-50%); font-size: 9px;
+      color: var(--dex-muted); font-weight: 500;
+    }
+    .pace-chart-legend {
+      display: flex; gap: 24px; flex-wrap: wrap;
+      margin-top: 32px; font-size: 12px; color: var(--dex-muted);
+    }
+    .legend-dot {
+      display: inline-block; width: 12px; height: 12px;
+      border-radius: 3px; margin-right: 6px; vertical-align: middle;
+    }
+
+    /* CREATIVE GROUPS */
+    .creative-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .creative-card {
+      background: var(--dex-white); border-radius: var(--radius-md);
+      padding: 20px 22px; box-shadow: var(--shadow);
+      border-top: 4px solid var(--dex-blue);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .creative-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,101,247,0.14);
+    }
+    .creative-card.win { border-top-color: var(--dex-teal); }
+    .creative-card.danger { border-top-color: var(--dex-navy); background: linear-gradient(180deg, rgba(5,2,78,0.02), var(--dex-white)); }
+    .creative-head {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 12px;
+    }
+    .creative-tag {
+      font-size: 15px; font-weight: 700;
+      font-family: var(--font-primary); color: var(--dex-navy);
+    }
+    .creative-meta {
+      font-size: 11px; color: var(--dex-muted);
+      text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;
+    }
+    .creative-value {
+      display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px;
+    }
+    .creative-roas {
+      font-size: 32px; font-weight: 700;
+      font-family: var(--font-primary); line-height: 1;
+    }
+    .creative-share {
+      font-size: 12px; color: var(--dex-muted);
+    }
+    .creative-detail {
+      font-size: 12px; color: var(--dex-muted); line-height: 1.5;
+    }
+    .creative-detail strong { color: var(--dex-navy); }
+    .creative-bar-bg {
+      height: 6px; background: var(--dex-light-bg);
+      border-radius: 3px; overflow: hidden; margin: 10px 0 8px;
+    }
+    .creative-bar-fill {
+      height: 100%; border-radius: 3px; transition: width 0.6s;
+    }
+
+    /* SALE vs BRAND COMPARISON */
+    .vs-compare {
+      display: grid; grid-template-columns: 1fr 80px 1fr; gap: 24px;
+      align-items: center; background: var(--dex-white);
+      border-radius: var(--radius-md); padding: 28px 32px;
+      box-shadow: var(--shadow); margin-top: 16px;
+    }
+    .vs-side { text-align: center; }
+    .vs-side .vs-label {
+      font-size: 12px; color: var(--dex-muted);
+      text-transform: uppercase; letter-spacing: 1px; font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .vs-side .vs-roas {
+      font-size: 42px; font-weight: 700;
+      font-family: var(--font-primary); line-height: 1;
+    }
+    .vs-side .vs-stat {
+      font-size: 13px; color: var(--dex-muted); margin-top: 6px;
+    }
+    .vs-side.winner .vs-roas { color: var(--dex-teal); }
+    .vs-divider {
+      text-align: center; font-family: var(--font-primary);
+      font-size: 24px; color: var(--dex-muted);
+    }
+
+    /* TREND CHART */
+    .chart-wrapper {
+      background: var(--dex-white); border-radius: var(--radius-md);
+      padding: 20px; box-shadow: var(--shadow); margin-top: 16px;
+    }
+    .chart-bars { display: flex; align-items: flex-end; gap: 3px; height: 160px; }
+    .chart-col { flex: 1; border-radius: 3px 3px 0 0; min-width: 4px; transition: opacity 0.2s; }
+    .chart-col:hover { opacity: 0.7; }
+    .chart-axis {
+      display: flex; justify-content: space-between;
+      margin-top: 8px; font-size: 11px;
+      color: var(--dex-muted); font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .hero { padding: 48px 20px 72px; }
+      .hero h1 { font-size: 32px; }
+      .hero-stat .num { font-size: 26px; }
+      .summary-box { padding: 32px 24px; }
+      .summary-box .value { font-size: 40px; }
+      .nav-logo { height: 36px; }
+    }
+
+    .flag-nav { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+    .flag-link {
+      display: flex; align-items: center; gap: 6px;
+      padding: 6px 10px; border-radius: 8px;
+      text-decoration: none; color: var(--dex-muted);
+      font-size: 13px; font-weight: 500; line-height: 1;
+      transition: background .18s, color .18s;
+      border: 1px solid transparent;
+    }
+    .flag-link:hover { background: var(--dex-blue-10); color: var(--dex-navy); }
+    .flag-link.active {
+      background: var(--dex-navy); color: #fff;
+      border-color: var(--dex-navy);
+    }
+    .flag-link .flag { font-size: 16px; line-height: 1; }
+    .flag-link .mkt { font-family: var(--font-secondary); }
+    @media (max-width: 700px) {
+      .flag-link .mkt { display: none; }
+      .flag-link { padding: 6px 8px; }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- URGENCY BAR -->
+<div class="urgency">🎯 Dex Grader · 13 signálov · 10 dimenzií · 1 grade pre váš Google Ads účet</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="container">
+    <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Light-Landscape@2x.png" alt="Dexfinity" class="nav-logo">
+    <div class="flag-nav">
+      <a href="aquapond_sk.html" class="flag-link active"><span class="flag">🇸🇰</span><span class="mkt">Slovensko</span></a><a href="aquapond_hu.html" class="flag-link"><span class="flag">🇭🇺</span><span class="mkt">Maďarsko</span></a><a href="aquapond_cz.html" class="flag-link"><span class="flag">🇨🇿</span><span class="mkt">Česko</span></a><a href="aquapond_de.html" class="flag-link"><span class="flag">🇩🇪</span><span class="mkt">Nemecko</span></a><a href="aquapond_at.html" class="flag-link"><span class="flag">🇦🇹</span><span class="mkt">Rakúsko</span></a><a href="aquapond_pl.html" class="flag-link"><span class="flag">🇵🇱</span><span class="mkt">Poľsko</span></a>
+    </div>
+    <a href="index.html" class="nav-back">← Prehľad</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="circle-1"></div><div class="circle-2"></div><div class="circle-3"></div>
+  <div class="container">
+    <span class="hero-badge">Dex Grader · Google Ads · 30 dní</span>
+    <div class="tagline">Dexfinity · Account Health Grader</div>
+    <h1>Grade Your Google Ads — <span>Aquapond SK</span></h1>
+    <p class="sub">Dex Grader je proprietárny Dexfinity framework, ktorý cez Google Ads API aplikuje <strong style="color:#fff">13 analytických signálov</strong> a skóruje váš účet na škále <strong style="color:#fff">0–100 (A+/A/B/C/D/F)</strong> naprieč 10 váženými dimenziami — od ROAS výkonu cez kanibalizáciu keywords po DoW-weighted budget pacing. Obdobie 2026-03-21 — 2026-04-19.</p>
+    
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">€3 325.53</span><span class="label">Spend / 30 dní</span></div>
+      <div class="hero-stat"><span class="num">570.1</span><span class="label">Konverzie</span></div>
+      <div class="hero-stat"><span class="num">10.90x</span><span class="label">ROAS</span></div>
+      <div class="hero-stat"><span class="num">17</span><span class="label">Kampane</span></div>
+    </div>
+    
+    <div class="freshness-note">
+      <span class="fresh-icon">✓</span>
+      <span>Spustené o 18:44 — dáta za uplynulé obdobie sú stabilné. Dnešné priebežné dáta Google počas dňa ešte upravuje.</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ METHODOLOGY BAR ═════════ -->
+<div class="methodology-bar">
+  <div class="container">
+    <div class="methodology-grid">
+      <div class="method-item">
+        <div class="method-num">13</div>
+        <div class="method-label">Analytických signálov</div>
+        <div class="method-desc">9 Google Ads Scripts + DoW pacing + creative grouping + kanibalizácia + attribution signals</div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">10</div>
+        <div class="method-label">Vážených dimenzií</div>
+        <div class="method-desc">Každá dimenzia dostane 0–100 a vlastnú váhu — súčet = váš grade</div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">A–F</div>
+        <div class="method-label">Škálovanie gradu</div>
+        <div class="method-desc">A+ Vynikajúce (≥90) · A Veľmi dobré · B Dobré · C Priemerné · D Slabé · F Kritické</div>
+      </div>
+      <div class="method-item">
+        <div class="method-num">€€€</div>
+        <div class="method-label">Wasted spend kalkulácia</div>
+        <div class="method-desc">Konkrétne vyčíslenie stratených peňazí cez search excluder, location, placements, schedule</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ ACCOUNT HEALTH SCORE ═════════ -->
+<div class="score-section">
+  <div class="container">
+    <div class="score-layout">
+      <div class="score-gauge">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          <!-- Background track -->
+          <circle cx="110" cy="110" r="82" fill="none"
+                  stroke="rgba(255,255,255,0.08)" stroke-width="14"/>
+          <!-- Decorative inner ring -->
+          <circle cx="110" cy="110" r="62" fill="none"
+                  stroke="rgba(0,101,247,0.15)" stroke-width="1"/>
+          <!-- Progress arc (rotated -90deg to start at top) -->
+          <circle cx="110" cy="110" r="82" fill="none"
+                  stroke="#0065F7" stroke-width="14"
+                  stroke-linecap="round"
+                  stroke-dasharray="515.22"
+                  stroke-dashoffset="108.20"
+                  transform="rotate(-90 110 110)"
+                  style="transition: stroke-dashoffset 1.2s ease-out;"/>
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-number">79</div>
+          <div class="gauge-outof">/ 100</div>
+          <div class="gauge-grade" style="background:#0065F7">B · Dobré</div>
+        </div>
+      </div>
+
+      <div class="score-intro">
+        <div class="tagline">Account Health Score</div>
+        <h2>Váš Google Ads grade je <span>B · 79/100</span></h2>
+        <p>Dex Grader hodnotí zdravie účtu naprieč <strong style="color:#fff">10 váženými dimenziami</strong>: ROAS výkon (20), zbytočný spend (15), schedule efficiency (12), device bidding (10), budget pacing (9), anomaly stability (8), search term quality (8), creative balance (8), cannibalization hygiene (7), channel diversity (3). Každá dimenzia má skóre 0–100 a vlastnú váhu podľa dopadu. Vážený priemer = váš grade.</p>
+      </div>
+    </div>
+
+    <div class="dim-grid">
+      
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">📈</span>
+            <div class="dim-name">ROAS Performance</div>
+            <div class="dim-weight">w. 20</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">100<span>/100</span></div>
+            <div class="dim-verdict">Vynikajúce</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:100%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="dim-detail">Account ROAS 10.90x · target 3.0x</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">💸</span>
+            <div class="dim-name">Wasted Spend</div>
+            <div class="dim-weight">w. 15</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">100<span>/100</span></div>
+            <div class="dim-verdict">Čistý účet</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:100%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="dim-detail">€0 wasted (0.0% of spend)</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">📅</span>
+            <div class="dim-name">Schedule Efficiency</div>
+            <div class="dim-weight">w. 12</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">65<span>/100</span></div>
+            <div class="dim-verdict">Dobré</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:65%;background:var(--dex-blue)"></div>
+          </div>
+          <div class="dim-detail">4 hod. pod pause thresholdom · 24% hodín pod target ROAS</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">📱</span>
+            <div class="dim-name">Device Bid Optimization</div>
+            <div class="dim-weight">w. 10</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">56<span>/100</span></div>
+            <div class="dim-verdict">Potrebná úprava</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:56%;background:#8B9BD1"></div>
+          </div>
+          <div class="dim-detail">3 z 3 zariadení má priestor na bid tuning</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">📊</span>
+            <div class="dim-name">Anomaly Stability</div>
+            <div class="dim-weight">w. 8</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">85<span>/100</span></div>
+            <div class="dim-verdict">Stabilný</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:85%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="dim-detail">1 anomálnych dní z 30</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">🔍</span>
+            <div class="dim-name">Search Term Quality</div>
+            <div class="dim-weight">w. 8</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">20<span>/100</span></div>
+            <div class="dim-verdict">Problém</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:20%;background:var(--dex-navy)"></div>
+          </div>
+          <div class="dim-detail">3 winners · 19 losers</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">🎯</span>
+            <div class="dim-name">Channel Diversity</div>
+            <div class="dim-weight">w. 3</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">100<span>/100</span></div>
+            <div class="dim-verdict">Diverzifikovaný</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:100%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="dim-detail">4 kanály: PERFORMANCE_MAX, SEARCH, VIDEO, DISPLAY</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">🎨</span>
+            <div class="dim-name">Creative Balance</div>
+            <div class="dim-weight">w. 8</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">90<span>/100</span></div>
+            <div class="dim-verdict">Zdravý mix</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:90%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="dim-detail">Všetky významné angles majú zdravý ROAS (≥ 2.5x)</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">🔍</span>
+            <div class="dim-name">Cannibalization Hygiene</div>
+            <div class="dim-weight">w. 7</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">65<span>/100</span></div>
+            <div class="dim-verdict">Menšia redundancia</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:65%;background:var(--dex-blue)"></div>
+          </div>
+          <div class="dim-detail">4 duplicitných keywords (€111.63) · 3.4% spendu</div>
+        </div>
+        
+        <div class="dim-card">
+          <div class="dim-head">
+            <span class="dim-icon">💰</span>
+            <div class="dim-name">Budget Pacing Discipline</div>
+            <div class="dim-weight">w. 9</div>
+          </div>
+          <div class="dim-score-row">
+            <div class="dim-score-num">88<span>/100</span></div>
+            <div class="dim-verdict">Presné tempo</div>
+          </div>
+          <div class="dim-bar-bg">
+            <div class="dim-bar-fill" style="width:88%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="dim-detail">Actual €2 189.12 vs expected €2 049.02 · +6.8% variance</div>
+        </div>
+        
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ OVERVIEW ═════════ -->
+<section>
+  <div class="container">
+    <h2>Prehľad účtu</h2>
+    <p class="section-sub">Základné KPIs pre Aquapond SK za posledných 30 dní</p>
+    
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Celkový spend</h3>
+        <div class="value">€3 325.53</div>
+        <div class="desc">za 30 dní · €110.85/deň</div>
+      </div>
+      <div class="metric-card">
+        <h3>Hodnota konverzií</h3>
+        <div class="value">€36 245.01</div>
+        <div class="desc">570.1 konverzií</div>
+      </div>
+      <div class="metric-card">
+        <h3>ROAS</h3>
+        <div class="value">10.90x</div>
+        <div class="desc">return on ad spend</div>
+      </div>
+      <div class="metric-card">
+        <h3>Kliknutia / CTR</h3>
+        <div class="value">8 621</div>
+        <div class="desc">CTR 1.39% · avg CPC €0.39</div>
+      </div>
+    </div>
+    
+    <div class="cat-header">Rozdelenie podľa channel type</div>
+    <table class="data-table">
+      <tr><th>Kanál</th><th>Kampane</th><th>Spend</th><th>Share</th><th>Konv.</th><th>Hodnota</th><th>ROAS</th></tr>
+      
+        <tr>
+          <td><strong>PERFORMANCE_MAX</strong></td>
+          <td>5</td>
+          <td>€1 488.23</td>
+          <td>44.8%</td>
+          <td>422.1</td>
+          <td>€28 768.20</td>
+          <td><span class="badge badge-positive">19.33x</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>SEARCH</strong></td>
+          <td>5</td>
+          <td>€1 119.61</td>
+          <td>33.7%</td>
+          <td>104.0</td>
+          <td>€7 476.81</td>
+          <td><span class="badge badge-positive">6.68x</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>DISPLAY</strong></td>
+          <td>6</td>
+          <td>€507.65</td>
+          <td>15.3%</td>
+          <td>43.0</td>
+          <td>€0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>VIDEO</strong></td>
+          <td>1</td>
+          <td>€210.04</td>
+          <td>6.3%</td>
+          <td>1.0</td>
+          <td>€0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+    </table>
+    <div class="cat-header">Top kampane podľa spendu</div>
+    <table class="data-table">
+      <tr><th>Kampaň</th><th>Typ</th><th>Spend</th><th>Kliky</th><th>Konv.</th><th>ROAS</th></tr>
+      
+        <tr>
+          <td>B: PMax / feed bez bazénů / celé SK</td>
+          <td><span class="issue-tag">PERFORMANCE_MAX</span></td>
+          <td>€605.47</td>
+          <td>2 062</td>
+          <td>67.1</td>
+          <td><span class="badge badge-positive">46.63x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: SE / brand</td>
+          <td><span class="issue-tag">SEARCH</span></td>
+          <td>€421.47</td>
+          <td>602</td>
+          <td>63.5</td>
+          <td><span class="badge badge-positive">11.43x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: DSA / Bazény e-shop</td>
+          <td><span class="issue-tag">SEARCH</span></td>
+          <td>€303.06</td>
+          <td>947</td>
+          <td>22.5</td>
+          <td><span class="badge badge-positive">7.81x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: PMax / SA / Compass bazény - Zápádní SK</td>
+          <td><span class="issue-tag">PERFORMANCE_MAX</span></td>
+          <td>€301.24</td>
+          <td>1 027</td>
+          <td>109.0</td>
+          <td><span class="badge badge-critical">0.35x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: Pmax / no feed / Compass pools - Bratislava</td>
+          <td><span class="issue-tag">PERFORMANCE_MAX</span></td>
+          <td>€270.01</td>
+          <td>741</td>
+          <td>125.0</td>
+          <td><span class="badge badge-critical">0.46x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: SE / Compass bazeny</td>
+          <td><span class="issue-tag">SEARCH</span></td>
+          <td>€256.82</td>
+          <td>162</td>
+          <td>1.0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: PMax - akvizice / Bratislava+</td>
+          <td><span class="issue-tag">PERFORMANCE_MAX</span></td>
+          <td>€240.60</td>
+          <td>733</td>
+          <td>119.0</td>
+          <td><span class="badge badge-critical">0.49x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: Video / Bazény</td>
+          <td><span class="issue-tag">VIDEO</span></td>
+          <td>€210.04</td>
+          <td>336</td>
+          <td>1.0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: SK-Rem-AQUAPOND-Bazeny-eshop</td>
+          <td><span class="issue-tag">DISPLAY</span></td>
+          <td>€143.94</td>
+          <td>717</td>
+          <td>0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: SE / Bazény</td>
+          <td><span class="issue-tag">SEARCH</span></td>
+          <td>€122.55</td>
+          <td>214</td>
+          <td>17.0</td>
+          <td><span class="badge badge-warning">2.39x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: Display / Pracovné ponuky ESHOP</td>
+          <td><span class="issue-tag">DISPLAY</span></td>
+          <td>€90.91</td>
+          <td>185</td>
+          <td>12.0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td>B: Display / Pracovné ponuky</td>
+          <td><span class="issue-tag">DISPLAY</span></td>
+          <td>€90.86</td>
+          <td>259</td>
+          <td>18.0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+    </table>
+  </div>
+</section>
+
+<!-- ═════════ BUDGET PACING (DoW-weighted) ═════════ -->
+<section class="alt">
+  <div class="container">
+    <h2>💰 Budget Pacing — deň po dni</h2>
+    <p class="section-sub">Kam smeruje spend tohto mesiaca · výpočet váži každý deň podľa historického DoW vzorca (posledných 60 dní) · piatky/soboty typicky nižšie, nedele/pondelky vyššie</p>
+    
+            <div class="pace-hero">
+              <div class="pace-hero-main">
+                <div class="pace-hero-label">Pacing k dátumu · 19/30 dní</div>
+                <div class="pace-hero-num" style="color:var(--dex-blue)">+6.8%</div>
+                <div class="pace-hero-status" style="color:var(--dex-blue)">Mierne nad plánom</div>
+                <div class="pace-hero-sub">vs. DoW-vážený priemer z posledných 60 dní</div>
+              </div>
+              <div class="pace-hero-stats">
+                <div class="pace-stat">
+                  <div class="pace-stat-label">Actual MTD</div>
+                  <div class="pace-stat-val">€2 189.12</div>
+                </div>
+                <div class="pace-stat">
+                  <div class="pace-stat-label">Expected MTD</div>
+                  <div class="pace-stat-val">€2 049.02</div>
+                </div>
+                <div class="pace-stat">
+                  <div class="pace-stat-label">Projekcia mesiaca</div>
+                  <div class="pace-stat-val" style="color:var(--dex-blue)">€3 462.61</div>
+                  <div class="pace-stat-sub">vs expected €3 241.01 (+€221.60)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cat-header">Denný priebeh mesiaca · minulé dni = actual, budúce = očakávané</div>
+            <div class="pace-chart-wrapper">
+              <div class="pace-chart-bars">
+                <div class="pace-col" style="height:79.1%;background:var(--dex-navy);opacity:1" title="Str 1. — actual €115.59"><span class="pace-day-num">1</span></div><div class="pace-col" style="height:76.3%;background:var(--dex-navy);opacity:1" title="Štv 2. — actual €111.45"><span class="pace-day-num">2</span></div><div class="pace-col" style="height:78.9%;background:#1A1F5C;opacity:1" title="Pia 3. — actual €115.24"><span class="pace-day-num">3</span></div><div class="pace-col" style="height:65.7%;background:#1A1F5C;opacity:1" title="Sob 4. — actual €95.94"><span class="pace-day-num">4</span></div><div class="pace-col" style="height:83.9%;background:var(--dex-navy);opacity:1" title="Ned 5. — actual €122.57"><span class="pace-day-num">5</span></div><div class="pace-col" style="height:78.9%;background:var(--dex-navy);opacity:1" title="Pon 6. — actual €115.23"><span class="pace-day-num">6</span></div><div class="pace-col" style="height:83.8%;background:var(--dex-navy);opacity:1" title="Uto 7. — actual €122.40"><span class="pace-day-num">7</span></div><div class="pace-col" style="height:100.0%;background:var(--dex-navy);opacity:1" title="Str 8. — actual €146.10"><span class="pace-day-num">8</span></div><div class="pace-col" style="height:74.5%;background:var(--dex-navy);opacity:1" title="Štv 9. — actual €108.87"><span class="pace-day-num">9</span></div><div class="pace-col" style="height:84.8%;background:#1A1F5C;opacity:1" title="Pia 10. — actual €123.86"><span class="pace-day-num">10</span></div><div class="pace-col" style="height:76.9%;background:#1A1F5C;opacity:1" title="Sob 11. — actual €112.34"><span class="pace-day-num">11</span></div><div class="pace-col" style="height:67.0%;background:var(--dex-navy);opacity:1" title="Ned 12. — actual €97.95"><span class="pace-day-num">12</span></div><div class="pace-col" style="height:85.8%;background:var(--dex-navy);opacity:1" title="Pon 13. — actual €125.30"><span class="pace-day-num">13</span></div><div class="pace-col" style="height:70.5%;background:var(--dex-navy);opacity:1" title="Uto 14. — actual €103.03"><span class="pace-day-num">14</span></div><div class="pace-col" style="height:76.7%;background:var(--dex-navy);opacity:1" title="Str 15. — actual €112.01"><span class="pace-day-num">15</span></div><div class="pace-col" style="height:69.1%;background:var(--dex-navy);opacity:1" title="Štv 16. — actual €100.94"><span class="pace-day-num">16</span></div><div class="pace-col" style="height:89.5%;background:#1A1F5C;opacity:1" title="Pia 17. — actual €130.72"><span class="pace-day-num">17</span></div><div class="pace-col" style="height:84.8%;background:#1A1F5C;opacity:1" title="Sob 18. — actual €123.88"><span class="pace-day-num">18</span></div><div class="pace-col" style="height:72.3%;background:var(--dex-navy);opacity:1" title="Ned 19. — actual €105.70"><span class="pace-day-num">19</span></div><div class="pace-col" style="height:75.4%;background:var(--dex-blue);opacity:0.35" title="Pon 20. — expected €110.16"><span class="pace-day-num">20</span></div><div class="pace-col" style="height:73.7%;background:var(--dex-blue);opacity:0.35" title="Uto 21. — expected €107.70"><span class="pace-day-num">21</span></div><div class="pace-col" style="height:72.2%;background:var(--dex-blue);opacity:0.35" title="Str 22. — expected €105.53"><span class="pace-day-num">22</span></div><div class="pace-col" style="height:77.3%;background:var(--dex-blue);opacity:0.35" title="Štv 23. — expected €112.97"><span class="pace-day-num">23</span></div><div class="pace-col" style="height:79.4%;background:var(--dex-blue);opacity:0.35" title="Pia 24. — expected €116.03"><span class="pace-day-num">24</span></div><div class="pace-col" style="height:62.4%;background:var(--dex-blue);opacity:0.35" title="Sob 25. — expected €91.19"><span class="pace-day-num">25</span></div><div class="pace-col" style="height:76.7%;background:var(--dex-blue);opacity:0.35" title="Ned 26. — expected €112.05"><span class="pace-day-num">26</span></div><div class="pace-col" style="height:75.4%;background:var(--dex-blue);opacity:0.35" title="Pon 27. — expected €110.16"><span class="pace-day-num">27</span></div><div class="pace-col" style="height:73.7%;background:var(--dex-blue);opacity:0.35" title="Uto 28. — expected €107.70"><span class="pace-day-num">28</span></div><div class="pace-col" style="height:72.2%;background:var(--dex-blue);opacity:0.35" title="Str 29. — expected €105.53"><span class="pace-day-num">29</span></div><div class="pace-col" style="height:77.3%;background:var(--dex-blue);opacity:0.35" title="Štv 30. — expected €112.97"><span class="pace-day-num">30</span></div>
+              </div>
+              <div class="pace-chart-legend">
+                <span><span class="legend-dot" style="background:var(--dex-navy)"></span> Actual (uplynulé)</span>
+                <span><span class="legend-dot" style="background:var(--dex-blue);opacity:0.35"></span> Expected (zvyšok mesiaca)</span>
+                <span><span class="legend-dot" style="background:#1A1F5C"></span> Víkendové dni</span>
+              </div>
+            </div>
+
+            <div class="cat-header">DoW vzorec · odchýlka od priemerného dňa</div>
+            <p style="color:var(--dex-muted);font-size:13px;margin-bottom:14px">Každý deň v týždni má inú priemernú útratu. Pacing algoritmus toto zohľadňuje — mesiac s piatimi piatkami a sobotami má nižší očakávaný budget než mesiac s piatimi pondelkami.</p>
+            <table class="data-table" style="max-width:480px">
+              <tr><th>Deň</th><th>Priemer (€)</th><th>Odchýlka</th></tr>
+              
+                <tr>
+                  <td><strong>Pon</strong></td>
+                  <td>€110.16</td>
+                  <td style="color:var(--dex-muted);font-weight:600">+2.1%</td>
+                </tr>
+                
+                <tr>
+                  <td><strong>Uto</strong></td>
+                  <td>€107.70</td>
+                  <td style="color:var(--dex-muted);font-weight:600">-0.2%</td>
+                </tr>
+                
+                <tr>
+                  <td><strong>Str</strong></td>
+                  <td>€105.53</td>
+                  <td style="color:var(--dex-muted);font-weight:600">-2.2%</td>
+                </tr>
+                
+                <tr>
+                  <td><strong>Štv</strong></td>
+                  <td>€112.97</td>
+                  <td style="color:var(--dex-muted);font-weight:600">+4.7%</td>
+                </tr>
+                
+                <tr>
+                  <td><strong>Pia</strong> <span class="issue-tag" style="margin-left:4px">víkend</span></td>
+                  <td>€116.03</td>
+                  <td style="color:var(--dex-teal);font-weight:600">+7.5%</td>
+                </tr>
+                
+                <tr>
+                  <td><strong>Sob</strong> <span class="issue-tag" style="margin-left:4px">víkend</span></td>
+                  <td>€91.19</td>
+                  <td style="color:var(--dex-navy);font-weight:600">-15.5%</td>
+                </tr>
+                
+                <tr>
+                  <td><strong>Ned</strong></td>
+                  <td>€112.05</td>
+                  <td style="color:var(--dex-muted);font-weight:600">+3.8%</td>
+                </tr>
+                
+            </table>
+            
+  </div>
+</section>
+
+<!-- ═════════ SCRIPT 1+2 — WINNERS & LOSERS ═════════ -->
+<section>
+  <div class="container" style="padding-top:0">
+    <h2>💰 Silent Winners & Losers</h2>
+    <p class="section-sub">Termy, keywords a produkty s neobvykle vysokým (winners) alebo nízkym (losers) ROAS · Signal pre scale-up / pause</p>
+
+    <table class="data-table">
+      <tr><th>Zdroj</th><th>Celkom</th><th>Winners</th><th>Losers</th><th>Win spend</th><th>Loss spend</th></tr>
+      
+        <tr>
+          <td>🔍 Search Terms</td>
+          <td>3 000</td>
+          <td><strong style="color:var(--dex-teal)">1</strong></td>
+          <td><strong style="color:var(--dex-navy)">8</strong></td>
+          <td>€106.10</td>
+          <td>€229.28</td>
+        </tr>
+        
+        <tr>
+          <td>🛒 Shopping Terms</td>
+          <td>0</td>
+          <td><strong style="color:var(--dex-teal)">0</strong></td>
+          <td><strong style="color:var(--dex-navy)">0</strong></td>
+          <td>€0</td>
+          <td>€0</td>
+        </tr>
+        
+        <tr>
+          <td>🎯 PMax Terms</td>
+          <td>0</td>
+          <td><strong style="color:var(--dex-teal)">0</strong></td>
+          <td><strong style="color:var(--dex-navy)">0</strong></td>
+          <td>€0</td>
+          <td>€0</td>
+        </tr>
+        
+        <tr>
+          <td>🔑 Keywords</td>
+          <td>2 294</td>
+          <td><strong style="color:var(--dex-teal)">2</strong></td>
+          <td><strong style="color:var(--dex-navy)">11</strong></td>
+          <td>€0</td>
+          <td>€0</td>
+        </tr>
+        
+        <tr>
+          <td>📦 Products</td>
+          <td>0</td>
+          <td><strong style="color:var(--dex-teal)">0</strong></td>
+          <td><strong style="color:var(--dex-navy)">0</strong></td>
+          <td>€0</td>
+          <td>€0</td>
+        </tr>
+        
+    </table>
+
+    <div class="cat-header">🏆 Top winners — scale up</div>
+    
+        <div class="finding">
+          <div class="bar low"></div>
+          <div class="content">
+            <h4><span class="badge badge-positive">Winner</span> aquapond</h4>
+            <p><strong>Search</strong> v kampani <em>B: SE / brand</em> · Spend €106.10 · ROAS <strong>42.38x</strong></p>
+            <div class="rec"><strong>Action:</strong> Scale up — navýšiť bid alebo budget, prípadne pridať ako exact match keyword.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar low"></div>
+          <div class="content">
+            <h4><span class="badge badge-positive">Winner</span> Aquapond</h4>
+            <p><strong>Keyword</strong> v kampani <em>B: SE / brand</em> · Spend €117.85 · ROAS <strong>38.16x</strong></p>
+            <div class="rec"><strong>Action:</strong> Scale up — navýšiť bid alebo budget, prípadne pridať ako exact match keyword.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar low"></div>
+          <div class="content">
+            <h4><span class="badge badge-positive">Winner</span> bazény</h4>
+            <p><strong>Keyword</strong> v kampani <em>B: SE / Bazény</em> · Spend €33.32 · ROAS <strong>7.41x</strong></p>
+            <div class="rec"><strong>Action:</strong> Scale up — navýšiť bid alebo budget, prípadne pridať ako exact match keyword.</div>
+          </div>
+        </div>
+        
+
+    <div class="cat-header">🚨 Top losers — pause / negate</div>
+    
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Loser</span> aquapond kontakt</h4>
+            <p><strong>Search</strong> v kampani <em>B: SE / brand</em> · Spend €40.57 · ROAS <strong>0.00x</strong></p>
+            <div class="rec"><strong>Action:</strong> Pauznúť, pridať ako negatívne keyword alebo znížiť bid.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Loser</span> aqua pond</h4>
+            <p><strong>Search</strong> v kampani <em>B: SE / brand</em> · Spend €40.48 · ROAS <strong>0.02x</strong></p>
+            <div class="rec"><strong>Action:</strong> Pauznúť, pridať ako negatívne keyword alebo znížiť bid.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Loser</span> aquapond sk</h4>
+            <p><strong>Search</strong> v kampani <em>B: SE / brand</em> · Spend €29.24 · ROAS <strong>0.00x</strong></p>
+            <div class="rec"><strong>Action:</strong> Pauznúť, pridať ako negatívne keyword alebo znížiť bid.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Loser</span> bazény</h4>
+            <p><strong>Keyword</strong> v kampani <em>B: SE / Bazény</em> · Spend €52.82 · ROAS <strong>0.86x</strong></p>
+            <div class="rec"><strong>Action:</strong> Pauznúť, pridať ako negatívne keyword alebo znížiť bid.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Loser</span> keramicky bazen</h4>
+            <p><strong>Keyword</strong> v kampani <em>B: SE / Compass bazeny</em> · Spend €44.46 · ROAS <strong>0.00x</strong></p>
+            <div class="rec"><strong>Action:</strong> Pauznúť, pridať ako negatívne keyword alebo znížiť bid.</div>
+          </div>
+        </div>
+        
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Loser</span> Aquapond kontakt</h4>
+            <p><strong>Keyword</strong> v kampani <em>B: SE / brand</em> · Spend €40.57 · ROAS <strong>0.00x</strong></p>
+            <div class="rec"><strong>Action:</strong> Pauznúť, pridať ako negatívne keyword alebo znížiť bid.</div>
+          </div>
+        </div>
+        
+  </div>
+</section>
+
+<!-- ═════════ SCRIPT 3 — SEARCH TERM EXCLUDER ═════════ -->
+<section>
+  <div class="container">
+    <h2>🔎 Search Term Excluder</h2>
+    <p class="section-sub">Search termy ktoré kandidujú na negatívne keywords · Spend ≥ €45 a ROAS < 0.65</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Termy analyzované</h3>
+        <div class="value">422</div>
+      </div>
+      <div class="metric-card">
+        <h3>Na vylúčenie</h3>
+        <div class="value">0</div>
+      </div>
+      <div class="metric-card pain">
+        <h3>Stratený spend</h3>
+        <div class="value">€0</div>
+      </div>
+      <div class="metric-card">
+        <h3>PMax (manuálne)</h3>
+        <div class="value">0</div>
+      </div>
+    </div>
+
+    <div class="cat-header">Termy na negatívne keywords</div>
+    <table class="data-table">
+      <tr><th>Search term</th><th>Kampaň</th><th>Typ</th><th>Spend</th><th>ROAS</th></tr>
+      <tr><td colspan="5" style="text-align:center;color:var(--dex-muted);padding:20px">✅ Žiadne termy nesplnili kritéria na vylúčenie</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═════════ SCRIPT 4+5 — SCHEDULE + SEASONAL ═════════ -->
+<section class="alt">
+  <div class="container">
+    <h2>📅 Ad Schedule Performance Analyzer</h2>
+    <p class="section-sub">Denná a hodinová výkonnosť · Heatmapa ROAS za 7 dní × 24 hodín · Target ROAS 3.0x</p>
+
+    <div class="cat-header">Výkonnosť podľa dňa</div>
+    <table class="data-table">
+      <tr><th>Deň</th><th>Spend</th><th>Konv.</th><th>ROAS</th><th>Odporúčanie</th></tr>
+      
+        <tr>
+          <td><strong>Pondelok</strong></td>
+          <td>€442.39</td>
+          <td>69.5</td>
+          <td><span class="badge badge-positive">5.86x</span></td>
+          <td><strong style="color:var(--dex-blue)">+20%</strong></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Utorok</strong></td>
+          <td>€433.31</td>
+          <td>84.0</td>
+          <td><span class="badge badge-positive">6.64x</span></td>
+          <td><strong style="color:var(--dex-blue)">+30%</strong></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Streda</strong></td>
+          <td>€483.56</td>
+          <td>81.0</td>
+          <td><span class="badge badge-info">3.36x</span></td>
+          <td><strong style="color:var(--dex-blue)">0%</strong></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Štvrtok</strong></td>
+          <td>€441.67</td>
+          <td>83.0</td>
+          <td><span class="badge badge-positive">22.79x</span></td>
+          <td><strong style="color:var(--dex-blue)">+30%</strong></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Piatok</strong></td>
+          <td>€503.97</td>
+          <td>83.8</td>
+          <td><span class="badge badge-info">4.32x</span></td>
+          <td><strong style="color:var(--dex-blue)">+10%</strong></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Sobota</strong></td>
+          <td>€478.92</td>
+          <td>80.1</td>
+          <td><span class="badge badge-info">4.32x</span></td>
+          <td><strong style="color:var(--dex-blue)">+10%</strong></td>
+        </tr>
+        
+        <tr>
+          <td><strong>Nedeľa</strong></td>
+          <td>€541.71</td>
+          <td>88.8</td>
+          <td><span class="badge badge-positive">27.39x</span></td>
+          <td><strong style="color:var(--dex-blue)">+30%</strong></td>
+        </tr>
+        
+    </table>
+
+    <div class="cat-header">ROAS Heatmapa — deň × hodina</div>
+    <div class="heatmap-wrapper">
+      <table>
+        <tr><th style="background:var(--dex-teal);color:#fff;padding:10px 12px;font-family:var(--font-secondary);font-weight:600;font-size:11px;letter-spacing:0.5px;text-transform:uppercase;border-bottom:3px solid var(--dex-blue)">Deň \ Hod</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">0</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">1</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">2</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">3</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">4</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">5</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">6</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">7</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">8</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">9</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">10</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">11</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">12</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">13</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">14</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">15</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">16</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">17</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">18</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">19</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">20</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">21</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">22</th><th style="background:var(--dex-teal);color:#fff;font-weight:600;font-size:11px;padding:10px 4px;border-bottom:3px solid var(--dex-blue)">23</th></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Pon</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">337.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">140.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">6.9</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.5</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.7</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">12.2</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.8</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">15.6</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.3</td><td style="background:#0065F7;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">4.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Uto</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.6</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">20.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">8.4</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">13.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">23.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.5</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">18.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Str</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.8</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">8.5</td><td style="background:#0065F7;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">4.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">9.9</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.5</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#0065F7;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">4.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">8.9</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.8</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.1</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.4</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">26.6</td></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Štv</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.5</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.5</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.4</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">6.3</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">60.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">15.5</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">63.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">96.4</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.6</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.6</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.8</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Pia</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">23.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">9.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#5B9FFF;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">3.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">22.7</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">8.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.8</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">25.4</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">8.4</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Sob</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.5</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">23.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#5B9FFF;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">3.8</td><td style="background:#E8F0FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">1.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">21.3</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">18.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.9</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td></tr><tr><td style="font-weight:700;color:#fff;background:var(--dex-teal);padding:6px 12px;font-size:12px;border-right:3px solid var(--dex-blue)">Ned</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">10.7</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">6.7</td><td style="background:#0065F7;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">4.5</td><td style="background:#B8D4FE;color:#05024E;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">2.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.0</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.1</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">37.8</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">13.4</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">19.5</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.5</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">429.2</td><td style="background:#05024E;color:#fff;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">61.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.2</td><td style="background:#F4F6FC;color:#6B7280;text-align:center;font-size:10px;padding:4px 2px;font-weight:600">0.3</td></tr>
+      </table>
+    </div>
+
+    <div class="cat-header">🟢 Najlepšie hodiny</div>
+    <div class="metrics-grid">
+        <div class="metric-card">
+          <h3>20:00 — 21:00</h3>
+          <div class="value">77.84x</div>
+          <div class="desc">€140.96 spend · 51.9 konv.</div>
+        </div>
+        
+        <div class="metric-card">
+          <h3>11:00 — 12:00</h3>
+          <div class="value">22.12x</div>
+          <div class="desc">€281.68 spend · 35.8 konv.</div>
+        </div>
+        
+        <div class="metric-card">
+          <h3>08:00 — 09:00</h3>
+          <div class="value">16.15x</div>
+          <div class="desc">€225.04 spend · 24.2 konv.</div>
+        </div>
+        
+        <div class="metric-card">
+          <h3>10:00 — 11:00</h3>
+          <div class="value">14.47x</div>
+          <div class="desc">€280.95 spend · 52.0 konv.</div>
+        </div>
+        
+        <div class="metric-card">
+          <h3>21:00 — 22:00</h3>
+          <div class="value">9.91x</div>
+          <div class="desc">€121.09 spend · 28.0 konv.</div>
+        </div>
+        </div>
+
+    <div class="cat-header">🔴 Najhoršie hodiny</div>
+    <div class="metrics-grid">
+        <div class="metric-card pain">
+          <h3>22:00 — 23:00</h3>
+          <div class="value" style="font-size:28px;font-weight:700;font-style:normal">0.09x</div>
+          <div class="desc" style="color:rgba(255,255,255,0.6)">€86.50 spend · 9.5 konv.</div>
+        </div>
+        
+        <div class="metric-card pain">
+          <h3>06:00 — 07:00</h3>
+          <div class="value" style="font-size:28px;font-weight:700;font-style:normal">0.27x</div>
+          <div class="desc" style="color:rgba(255,255,255,0.6)">€88.65 spend · 9.0 konv.</div>
+        </div>
+        
+        <div class="metric-card pain">
+          <h3>13:00 — 14:00</h3>
+          <div class="value" style="font-size:28px;font-weight:700;font-style:normal">0.39x</div>
+          <div class="desc" style="color:rgba(255,255,255,0.6)">€213.73 spend · 26.0 konv.</div>
+        </div>
+        
+        <div class="metric-card pain">
+          <h3>15:00 — 16:00</h3>
+          <div class="value" style="font-size:28px;font-weight:700;font-style:normal">1.70x</div>
+          <div class="desc" style="color:rgba(255,255,255,0.6)">€151.91 spend · 32.4 konv.</div>
+        </div>
+        
+        <div class="metric-card pain">
+          <h3>07:00 — 08:00</h3>
+          <div class="value" style="font-size:28px;font-weight:700;font-style:normal">2.18x</div>
+          <div class="desc" style="color:rgba(255,255,255,0.6)">€164.90 spend · 14.5 konv.</div>
+        </div>
+        </div>
+
+    
+        <div class="finding">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">Odporúčame pauznúť</span> 06:00, 13:00, 15:00, 22:00</h4>
+            <p>Tieto hodiny majú ROAS pod pauznúť threshold alebo spend bez konverzií.</p>
+            <div class="rec"><strong>Action:</strong> Pridať do Ad Schedule s bid adjustment -100% alebo vylúčiť z časového targetingu.</div>
+          </div>
+        </div>
+        
+
+    <div class="cat-header">🍂 Seasonal Bid Adjustment — uplift bloky</div>
+    <p style="color:var(--dex-muted);padding:20px;text-align:center">Žiadne bloky nesplnili kritéria pre uplift (min. spend €100 + ROAS nad 2.5x).</p>
+
+    
+  </div>
+</section>
+
+<!-- ═════════ SCRIPT 8 — DEVICE BIDS ═════════ -->
+<section>
+  <div class="container">
+    <h2>💹 Device Bid Adjuster</h2>
+    <p class="section-sub">Výkonnosť po zariadeniach · Bid adjustmenty podľa ROAS ratio · Target 1.0x, min. spend €100</p>
+
+    <table class="data-table">
+      <tr><th>Zariadenie</th><th>Spend</th><th>Kliky</th><th>Konv.</th><th>ROAS</th><th>Odporúčanie</th></tr>
+      
+        <tr>
+          <td>💻 <strong>DESKTOP</strong></td>
+          <td>€1 047.20</td>
+          <td>2 309</td>
+          <td>110.2</td>
+          <td><span class="badge badge-positive">21.92x</span></td>
+          <td><strong style="color:var(--dex-teal)">+30%</strong></td>
+        </tr>
+        
+        <tr>
+          <td>📱 <strong>MOBILE</strong></td>
+          <td>€2 089.96</td>
+          <td>5 813</td>
+          <td>421.9</td>
+          <td><span class="badge badge-positive">6.34x</span></td>
+          <td><strong style="color:var(--dex-teal)">+30%</strong></td>
+        </tr>
+        
+        <tr>
+          <td>📋 <strong>TABLET</strong></td>
+          <td>€167.82</td>
+          <td>497</td>
+          <td>38.0</td>
+          <td><span class="badge badge-critical">0.22x</span></td>
+          <td><strong style="color:var(--dex-navy)">-50%</strong></td>
+        </tr>
+        
+    </table>
+
+    <div class="cat-header">Per-kampaň × device adjustmenty</div>
+    <div class="metrics-grid">
+      <div class="metric-card"><h3>Zvýšenia</h3><div class="value" style="color:var(--dex-teal)">6</div><div class="desc">bid +%</div></div>
+      <div class="metric-card"><h3>Zníženia</h3><div class="value" style="color:var(--dex-navy)">5</div><div class="desc">bid -%</div></div>
+      <div class="metric-card"><h3>Bez zmeny</h3><div class="value">1</div><div class="desc">v acceptable range</div></div>
+      <div class="metric-card"><h3>Pod threshold</h3><div class="value">44</div><div class="desc">málo dát na rozhodnutie</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ CREATIVE PERFORMANCE GROUPING ═════════ -->
+<section class="alt">
+  <div class="container">
+    <h2>🎨 Creative Performance — aké angles fungujú</h2>
+    <p class="section-sub">Kampane zgrupované podľa vzoru v názve (Sale, Brand, Kategória, Video, Remarketing...) · každý angle má vlastný ROAS a share na budgete</p>
+    <div class="creative-grid">
+      
+        <div class="creative-card win">
+          <div class="creative-head">
+            <div class="creative-tag">PMax</div>
+            <div class="creative-meta">5 kampaní</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-teal)">19.33x</span>
+            <span class="creative-share">ROAS · 31.3% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:100.0%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€1 488.24</strong> spend · 422.1 konv. · €28 768.20 value
+            <br>CPA €3.53
+          </div>
+        </div>
+        
+        <div class="creative-card win">
+          <div class="creative-head">
+            <div class="creative-tag">Shopping / Feed</div>
+            <div class="creative-meta">6 kampaní</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-teal)">23.78x</span>
+            <span class="creative-share">ROAS · 25.1% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:80.1%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€1 192.61</strong> spend · 235.1 konv. · €28 357.88 value
+            <br>CPA €5.07
+          </div>
+        </div>
+        
+        <div class="creative-card">
+          <div class="creative-head">
+            <div class="creative-tag">Ostatné</div>
+            <div class="creative-meta">6 kampaní</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-blue)">2.99x</span>
+            <span class="creative-share">ROAS · 18.7% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:59.7%;background:var(--dex-blue)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€888.66</strong> spend · 40.5 konv. · €2 659.99 value
+            <br>CPA €21.94
+          </div>
+        </div>
+        
+        <div class="creative-card win">
+          <div class="creative-head">
+            <div class="creative-tag">Brand</div>
+            <div class="creative-meta">1 kampaň</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-teal)">11.43x</span>
+            <span class="creative-share">ROAS · 8.9% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:28.3%;background:var(--dex-teal)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€421.47</strong> spend · 63.5 konv. · €4 816.82 value
+            <br>CPA €6.64
+          </div>
+        </div>
+        
+        <div class="creative-card">
+          <div class="creative-head">
+            <div class="creative-tag">Display</div>
+            <div class="creative-meta">4 kampane</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-navy)">0.00x</span>
+            <span class="creative-share">ROAS · 6.7% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:21.3%;background:var(--dex-navy)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€317.13</strong> spend · 43.0 konv. · €0 value
+            <br>CPA €7.38
+          </div>
+        </div>
+        
+        <div class="creative-card danger">
+          <div class="creative-head">
+            <div class="creative-tag">Nový zákazník</div>
+            <div class="creative-meta">1 kampaň</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-navy)">0.49x</span>
+            <span class="creative-share">ROAS · 5.1% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:16.2%;background:var(--dex-navy)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€240.60</strong> spend · 119.0 konv. · €118.00 value
+            <br>CPA €2.02
+          </div>
+        </div>
+        
+        <div class="creative-card">
+          <div class="creative-head">
+            <div class="creative-tag">Video / YouTube</div>
+            <div class="creative-meta">1 kampaň</div>
+          </div>
+          <div class="creative-value">
+            <span class="creative-roas" style="color:var(--dex-navy)">0.00x</span>
+            <span class="creative-share">ROAS · 4.4% spendu</span>
+          </div>
+          <div class="creative-bar-bg">
+            <div class="creative-bar-fill" style="width:14.1%;background:var(--dex-navy)"></div>
+          </div>
+          <div class="creative-detail">
+            <strong>€210.04</strong> spend · 1.0 konv. · €0 value
+            <br>CPA €210.04
+          </div>
+        </div>
+        
+    </div>
+    
+  </div>
+</section>
+
+<!-- ═════════ KEYWORD OVERLAP / CANNIBALIZATION ═════════ -->
+<section>
+  <div class="container">
+    <h2>🔍 Kanibalizácia — duplicitné keywords naprieč ad groups</h2>
+    <p class="section-sub">Keď ten istý keyword exituje v 2+ ad groupoch, kampane si prebíjajú bidy proti sebe a dvíhajú si CPC. Toto je jedna z najčastejších skrytých straty ROAS.</p>
+
+    <div class="metrics-grid" style="margin-bottom:24px">
+      <div class="metric-card">
+        <h3>Duplicitné keywords</h3>
+        <div class="value">4</div>
+      </div>
+      <div class="metric-card">
+        <h3>Spend v duplikátoch</h3>
+        <div class="value">€111.63</div>
+      </div>
+      <div class="metric-card">
+        <h3>PMax brand-ish termy</h3>
+        <div class="value">0</div>
+        <div class="desc">ROAS &gt; 8x v PMax search terms</div>
+      </div>
+      <div class="metric-card">
+        <h3>PMax brand spend</h3>
+        <div class="value">€0</div>
+        <div class="desc">potenciálna kanibalizácia brand search</div>
+      </div>
+    </div>
+
+    <div class="cat-header">Top duplicitné keywords podľa spendu</div>
+    <table class="data-table">
+      <tr><th>Keyword</th><th>Inštancií</th><th>Ad groups</th><th>Match types</th><th>Spend</th><th>Konv.</th><th>ROAS</th></tr>
+      
+        <tr>
+          <td><strong>compass bazeny</strong></td>
+          <td>3×</td>
+          <td>2</td>
+          <td><span class="issue-tag">EXACT + PHRASE + BROAD</span></td>
+          <td>€50.11</td>
+          <td>1.0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>compass senec</strong></td>
+          <td>2×</td>
+          <td>2</td>
+          <td><span class="issue-tag">BROAD</span></td>
+          <td>€27.65</td>
+          <td>0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>compass bazen</strong></td>
+          <td>3×</td>
+          <td>2</td>
+          <td><span class="issue-tag">EXACT + PHRASE + BROAD</span></td>
+          <td>€26.23</td>
+          <td>0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>bazen compass</strong></td>
+          <td>3×</td>
+          <td>2</td>
+          <td><span class="issue-tag">EXACT + PHRASE + BROAD</span></td>
+          <td>€7.64</td>
+          <td>0</td>
+          <td><span class="badge badge-critical">0.00x</span></td>
+        </tr>
+        
+    </table>
+
+    
+  </div>
+</section>
+
+<!-- ═════════ ATTRIBUTION SIGNALS ═════════ -->
+<section class="alt">
+  <div class="container">
+    <h2>📊 Attribution signals — neklame vám Google?</h2>
+    <p class="section-sub">Porovnanie share spendu vs. share konverzií naprieč kanálmi · inflation ratio &gt; 1.3x je typický signál over-attribution</p>
+
+    <table class="data-table">
+      <tr><th>Kanál</th><th>Share spendu</th><th>Share konverzií</th><th>Inflation ratio</th><th>Signál</th></tr>
+      
+        <tr>
+          <td><strong>PERFORMANCE_MAX</strong></td>
+          <td>44.8%</td>
+          <td>74.0%</td>
+          <td><span class="badge badge-critical">1.65x</span></td>
+          <td>⚠️ Vysoká inflation</td>
+        </tr>
+        
+        <tr>
+          <td><strong>SEARCH</strong></td>
+          <td>33.7%</td>
+          <td>18.2%</td>
+          <td><span class="badge badge-warning">0.54x</span></td>
+          <td>Under-attribution</td>
+        </tr>
+        
+        <tr>
+          <td><strong>VIDEO</strong></td>
+          <td>6.3%</td>
+          <td>0.2%</td>
+          <td><span class="badge badge-warning">0.03x</span></td>
+          <td>Under-attribution</td>
+        </tr>
+        
+        <tr>
+          <td><strong>DISPLAY</strong></td>
+          <td>15.3%</td>
+          <td>7.5%</td>
+          <td><span class="badge badge-warning">0.49x</span></td>
+          <td>Under-attribution</td>
+        </tr>
+        
+    </table>
+
+    
+        <div class="finding" style="margin-top:20px">
+          <div class="bar high"></div>
+          <div class="content">
+            <h4><span class="badge badge-critical">🚨 Attribution inflation · Vysoké riziko</span></h4>
+            <p>PMax generuje 74.0% konverzií z 44.8% spendu (ratio 1.65x). Toto je typický vzor over-attribution — PMax si pripisuje konverzie, ktoré by organika alebo brand search urobili aj bez neho.</p>
+            <div class="rec"><strong>Doporučenie:</strong> Spojte Google Ads s GA4 a porovnajte reportované konverzie s session-based dátami. Ak ratio &gt; 1.3x, znížte PMax budget alebo pridajte brand-term exclusions.</div>
+          </div>
+        </div>
+        
+
+    <div class="finding" style="margin-top:24px;background:linear-gradient(135deg,rgba(0,101,247,0.04),rgba(22,171,139,0.02))">
+      <div class="bar" style="background:var(--dex-teal)"></div>
+      <div class="content">
+        <h4><span class="badge badge-info">🔗 Pre presnú attribution analýzu</span> Potrebujeme GA4 prístup</h4>
+        <p>Inflation ratio ukazuje iba <em>interný signál</em> v rámci Google Ads. Skutočnú pravdu zistíme až porovnaním s GA4 session-based dátami — Google často pripisuje konverzie rôznym kanálom rôzne (attribution modely, window). U klientov sme videli prípady kde Google ukazoval o 30-40% viac konverzií než GA4.</p>
+        <div class="rec"><strong>Next step:</strong> Pre presnú attribution analýzu nám poskytnite prístup do GA4 — porovnáme Google reportované konverzie s GA4 session-based dátami.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ SCRIPT 6+7 — LOCATION + PLACEMENTS ═════════ -->
+<section>
+  <div class="container">
+    <h2>🗺️ Lokácie & Placementy</h2>
+    <p class="section-sub">Mestá a Display/YouTube placementy ktoré kandidujú na vylúčenie</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card"><h3>Mestá analyzované</h3><div class="value">0</div></div>
+      <div class="metric-card"><h3>Mestá na exclude</h3><div class="value">0</div></div>
+      <div class="metric-card"><h3>Placementy</h3><div class="value">5 000</div></div>
+      <div class="metric-card"><h3>Placementy na exclude</h3><div class="value">0</div></div>
+    </div>
+
+    <div class="cat-header">🗺️ Mestá na vylúčenie</div>
+    <table class="data-table">
+      <tr><th>City ID</th><th>Spend</th><th>Konv.</th><th>ROAS</th></tr>
+      <tr><td colspan="4" style="text-align:center;color:var(--dex-muted);padding:20px">Žiadne mestá nesplnili kritéria na vylúčenie (min. spend €200 + ROAS pod 0.7x).</td></tr>
+    </table>
+
+    <div class="cat-header">✋ Placementy na vylúčenie</div>
+    <table class="data-table">
+      <tr><th>Placement</th><th>Typ</th><th>Kampaň</th><th>Spend</th><th>Dôvod</th></tr>
+      <tr><td colspan="5" style="text-align:center;color:var(--dex-muted);padding:20px">Žiadne placementy nesplnili kritéria na vylúčenie.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═════════ SCRIPT 9 — ANOMALY ═════════ -->
+<section>
+  <div class="container">
+    <h2>❌ Anomaly Detector</h2>
+    <p class="section-sub">Denný trend ROAS · Detekcia odchýlok nad 1 / 2 štandardných odchýlok od priemeru</p>
+
+    <div class="chart-wrapper">
+      <div class="chart-bars" id="trendChart"></div>
+      <div class="chart-axis" id="trendLabels"></div>
+    </div>
+
+    
+        <div class="metrics-grid" style="margin-top:24px">
+          <div class="metric-card">
+            <h3>Posledný deň · Kliky</h3>
+            <div class="value">329</div>
+            <div class="desc">Ø 287/deň · <span class="badge badge-positive">normal</span></div>
+          </div>
+          <div class="metric-card">
+            <h3>Posledný deň · Konverzie</h3>
+            <div class="value">13.6</div>
+            <div class="desc">Ø 19.0/deň · <span class="badge badge-warning">low</span></div>
+          </div>
+          <div class="metric-card">
+            <h3>Anomálne dni</h3>
+            <div class="value">1</div>
+            <div class="desc">z 30 analyzovaných</div>
+          </div>
+        </div>
+        
+  </div>
+</section>
+
+<!-- ═════════ SAVINGS ═════════ -->
+<section class="alt">
+  <div class="container">
+    <h2>Celková identifikovaná úspora</h2>
+    <p class="section-sub">Súhrn potenciálnych úspor zo všetkých 13 Dex Grader signálov · Spolu s dopadom na ROAS</p>
+
+    <div class="summary-box">
+      <div class="label">Zbytočný spend identifikovaný týmito 9 skriptami</div>
+      <div class="value">€0</div>
+      <p>Po aplikovaní všetkých odporúčaní (negatívne keywords, exclusions, bid adjustments, schedule changes) by sa váš účet zbavil tohto wasted spendu a presmeroval budget na výkonné kampane.</p>
+      <div class="roas-uplift">
+        Aktuálny ROAS <strong>10.90x</strong> → Potenciálny ROAS <strong>10.90x</strong>
+      </div>
+    </div>
+
+    
+    <div class="metrics-grid" style="margin-top:24px">
+      <div class="metric-card">
+        <h3>Search termy</h3>
+        <div class="value">€0</div>
+        <div class="desc">0 termov na negate</div>
+      </div>
+      <div class="metric-card">
+        <h3>Lokácie</h3>
+        <div class="value">€0</div>
+        <div class="desc">0 miest</div>
+      </div>
+      <div class="metric-card">
+        <h3>Placementy</h3>
+        <div class="value">€0</div>
+        <div class="desc">0 placementov</div>
+      </div>
+      <div class="metric-card">
+        <h3>Časový rozvrh</h3>
+        <div class="value">€0</div>
+        <div class="desc">0 blokov</div>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="circle-f f1"></div>
+  <div class="circle-f f2"></div>
+  <img src="https://www.dexfinity.com/wp-content/uploads/2021/03/Logo-Small-Dark-Landscape@2x.png" alt="Dexfinity" class="footer-logo">
+  <p>Dex Grader · Aquapond SK · Vygenerované 2026-04-20 18:44</p>
+  <p style="margin-top:8px;font-size:11px;opacity:0.6">Dex Grader · 13 analytických signálov · 10 vážených dimenzií · Vygenerované cez Google Ads API. Odporúčania sú orientačné — finálne rozhodnutie vždy patrí stratégovi.</p>
+  <div class="go-beyond">Go Beyond</div>
+</footer>
+
+<script>
+const trend = [{"date": "2026-03-21", "clicks": 218, "conv": 17.5, "cost": 69.4, "value": 1368.74, "roas": 19.72}, {"date": "2026-03-22", "clicks": 260, "conv": 24.8, "cost": 101.82, "value": 11222.91, "roas": 110.22}, {"date": "2026-03-23", "clicks": 292, "conv": 14.5, "cost": 107.78, "value": 684.12, "roas": 6.35}, {"date": "2026-03-24", "clicks": 238, "conv": 18.0, "cost": 115.07, "value": 114.95, "roas": 1.0}, {"date": "2026-03-25", "clicks": 295, "conv": 29.0, "cost": 109.86, "value": 466.74, "roas": 4.25}, {"date": "2026-03-26", "clicks": 249, "conv": 21.0, "cost": 120.41, "value": 5495.77, "roas": 45.64}, {"date": "2026-03-27", "clicks": 306, "conv": 20.0, "cost": 134.15, "value": 19.0, "roas": 0.14}, {"date": "2026-03-28", "clicks": 202, "conv": 15.0, "cost": 77.37, "value": 13.0, "roas": 0.17}, {"date": "2026-03-29", "clicks": 263, "conv": 12.0, "cost": 113.67, "value": 623.08, "roas": 5.48}, {"date": "2026-03-30", "clicks": 222, "conv": 13.5, "cost": 94.08, "value": 51.9, "roas": 0.55}, {"date": "2026-03-31", "clicks": 226, "conv": 11.0, "cost": 92.81, "value": 9.0, "roas": 0.1}, {"date": "2026-04-01", "clicks": 267, "conv": 19.0, "cost": 115.59, "value": 363.57, "roas": 3.15}, {"date": "2026-04-02", "clicks": 247, "conv": 14.0, "cost": 111.45, "value": 11.0, "roas": 0.1}, {"date": "2026-04-03", "clicks": 301, "conv": 20.8, "cost": 115.24, "value": 52.2, "roas": 0.45}, {"date": "2026-04-04", "clicks": 276, "conv": 17.5, "cost": 95.94, "value": 619.55, "roas": 6.46}, {"date": "2026-04-05", "clicks": 320, "conv": 18.4, "cost": 122.57, "value": 491.89, "roas": 4.01}, {"date": "2026-04-06", "clicks": 349, "conv": 20.5, "cost": 115.23, "value": 442.46, "roas": 3.84}, {"date": "2026-04-07", "clicks": 325, "conv": 30.9, "cost": 122.4, "value": 2239.47, "roas": 18.3}, {"date": "2026-04-08", "clicks": 292, "conv": 23.0, "cost": 146.1, "value": 353.43, "roas": 2.42}, {"date": "2026-04-09", "clicks": 294, "conv": 22.0, "cost": 108.87, "value": 133.04, "roas": 1.22}, {"date": "2026-04-10", "clicks": 319, "conv": 18.0, "cost": 123.86, "value": 715.75, "roas": 5.78}, {"date": "2026-04-11", "clicks": 297, "conv": 13.0, "cost": 112.34, "value": 10.0, "roas": 0.09}, {"date": "2026-04-12", "clicks": 330, "conv": 20.0, "cost": 97.95, "value": 2321.2, "roas": 23.7}, {"date": "2026-04-13", "clicks": 358, "conv": 21.0, "cost": 125.3, "value": 1414.06, "roas": 11.29}, {"date": "2026-04-14", "clicks": 320, "conv": 24.0, "cost": 103.03, "value": 515.41, "roas": 5.0}, {"date": "2026-04-15", "clicks": 290, "conv": 10.0, "cost": 112.01, "value": 441.18, "roas": 3.94}, {"date": "2026-04-16", "clicks": 292, "conv": 26.0, "cost": 100.94, "value": 4424.45, "roas": 43.83}, {"date": "2026-04-17", "clicks": 316, "conv": 25.0, "cost": 130.72, "value": 1391.33, "roas": 10.64}, {"date": "2026-04-18", "clicks": 328, "conv": 17.0, "cost": 123.88, "value": 58.2, "roas": 0.47}, {"date": "2026-04-19", "clicks": 329, "conv": 13.6, "cost": 105.7, "value": 177.59, "roas": 1.68}];
+const chartEl = document.getElementById('trendChart');
+const labelsEl = document.getElementById('trendLabels');
+if (trend.length > 0 && chartEl) {
+  const maxRoas = Math.max(...trend.map(d => d.roas), 1);
+  trend.forEach(d => {
+    const h = Math.max((d.roas / maxRoas) * 150, 4);
+    const col = document.createElement('div');
+    col.className = 'chart-col';
+    col.style.height = h + 'px';
+    // Dex-only palette: navy for top tier, blue for mid, light blue for bottom
+    col.style.background = d.roas >= 6 ? '#05024E' : d.roas >= 3 ? '#0065F7' : '#B8D4FE';
+    col.title = d.date + ': ROAS ' + d.roas + 'x | €' + d.cost;
+    chartEl.appendChild(col);
+  });
+  if (trend.length > 0) {
+    labelsEl.innerHTML = '<span>' + trend[0].date.slice(5) + '</span><span>' + trend[Math.floor(trend.length/2)].date.slice(5) + '</span><span>' + trend[trend.length-1].date.slice(5) + '</span>';
+  }
+}
+</script>
+</body>
+</html>
